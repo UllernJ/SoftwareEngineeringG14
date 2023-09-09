@@ -9,8 +9,8 @@ public class Tour {
     private int id;
     private String name;
     private String description;
-    private String duration;
-    private String price;
+    private int durationHours;
+    private int price;
     private String image;
     private String location;
     private String category;
