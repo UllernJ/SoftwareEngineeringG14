@@ -2,6 +2,8 @@ package com.example.softwareg14.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Tour {
     private int id;
@@ -13,4 +15,5 @@ public class Tour {
     private String location;
     private String category;
     private Organization organization;
+    private List<User> users;
 }
