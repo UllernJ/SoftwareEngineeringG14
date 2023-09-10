@@ -23,7 +23,9 @@ public class Organization {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.ORGANIZATION_REGISTER)
     public ResponseEntity<String> organization(@RequestBody OrganizationRequest organizationRequest) {
-        //todo validate request
+        if(!organizationRequest.validate()) {
+            return new ResponseEntity("Invalid request", HttpStatus.BAD_REQUEST);
+        }
         try {
             organizationService.createOrganization(organizationRequest.name, organizationRequest.address, organizationRequest.phone, organizationRequest.email, organizationRequest.website, organizationRequest.description, organizationRequest.password);
             return new ResponseEntity("Organization registered successfully", HttpStatus.CREATED);
