@@ -14,8 +14,8 @@ public class UserService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createUser(String name, String username, String password) {
-        jdbcTemplate.update("INSERT INTO user (name, username, password) VALUES (?, ?, ?)", name, username, password);
+    public void createUser(String name, String username, String password, String email) {
+        jdbcTemplate.update("INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)", name, username, password, email);
     }
 
     public User getUserById(int id) {
@@ -25,6 +25,7 @@ public class UserService {
             user.setName(rs.getString("name"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
             return user;
         });
     }
