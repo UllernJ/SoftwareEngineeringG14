@@ -2,6 +2,7 @@ package com.example.softwareg14.entity;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,9 @@ public class Tour {
     private Organization organization;
     private List<User> usersAttending = new ArrayList<>();
     private int maxCapacity;
+    private LocalDate date;
 
-    public Tour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity) {
+    public Tour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -30,6 +32,11 @@ public class Tour {
         this.category = category;
         this.organization = organization;
         this.maxCapacity = maxCapacity;
+        if(date == null) {
+            this.date = LocalDate.now();
+        } else {
+            this.date = date;
+        }
     }
     public Tour() {
 

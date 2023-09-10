@@ -28,7 +28,7 @@ public class UserService {
             return user;
         });
     }
-    public void deleteUser(int id) {
+    public void deleteUserById(int id) {
         jdbcTemplate.update("DELETE FROM user WHERE id = ?", id);
     }
 
