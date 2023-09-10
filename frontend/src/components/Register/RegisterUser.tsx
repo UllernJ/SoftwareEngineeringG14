@@ -1,15 +1,13 @@
 import {useState} from "react";
-export const Register = () => {
-    const [name, setName] = useState<string>('')
-    const [username, setUsername] = useState<string>('')
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-
+export const RegisterUser = () => {
+    const [name, setName] = useState<string | null>(null)
+    const [username, setUsername] = useState<string | null>(null)
+    const [email, setEmail] = useState<string | null>(null)
+    const [password, setPassword] = useState<string | null>(null)
+    const [message, setMessage] = useState<string | null>(null)
 
     const handleRegister = async (e: any) => {
         e.preventDefault()
-        console.log("test")
-        console.log(name, email, password);
         try {
             const body = {name, username, email, password}
             const response = await fetch('http://localhost:8080/api/user/register', {
@@ -17,10 +15,18 @@ export const Register = () => {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(body)
             })
-            const parseRes = await response.json()
-            console.log(parseRes)
+            const parseRes = await response;
+            if (parseRes.status === 200 || parseRes.status === 201) {
+                setMessage('RegisterUser success')
+                setName(null)
+                setUsername(null)
+                setEmail(null)
+                setPassword(null)
+            } else {
+                setMessage('RegisterUser failed')
+            }
         } catch (err: any) {
-            console.error(err.message)
+            setMessage("RegisterUser failed")
         }
     }
 
@@ -39,6 +45,7 @@ export const Register = () => {
                                     <input type="name"
                                            className="form-control"
                                            id="name"
+                                           value={name || ''}
                                            onChange={(e) => setName(e.target.value)}
                                            placeholder="Name"/>
                                 </div>
@@ -47,6 +54,7 @@ export const Register = () => {
                                     <input type="username"
                                            className="form-control"
                                            id="username"
+                                           value={username || ''}
                                            onChange={(e) => setUsername(e.target.value)}
                                            placeholder="Username"/>
                                 </div>
@@ -55,6 +63,7 @@ export const Register = () => {
                                     <input type="email"
                                             className="form-control"
                                             id="email"
+                                            value={email || ''}
                                             onChange={(e) => setEmail(e.target.value)}
                                             placeholder="Email"/>
                                 </div>
@@ -63,6 +72,7 @@ export const Register = () => {
                                     <input type="password"
                                             className="form-control"
                                             id="password"
+                                            value={password || ''}
                                             onChange={(e) => setPassword(e.target.value)}
                                             placeholder="Password"/>
                                 </div>
@@ -74,6 +84,7 @@ export const Register = () => {
                     </div>
                 </div>
             </div>
+            {message && <div className="alert alert-primary" role="alert">{message}</div>}
         </div>
     )
 }

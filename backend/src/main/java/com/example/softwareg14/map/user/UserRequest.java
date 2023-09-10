@@ -1,4 +1,4 @@
-package com.example.softwareg14.map;
+package com.example.softwareg14.map.user;
 
 public class UserRequest {
     public String email;

@@ -7,7 +7,7 @@ export const NavigationBar = () => {
             <div className="container" style={containerStyle}>
                 <Link to="/" style={linkStyle}>Home</Link>
                 <div style={spacerStyle}></div>
-                <Link to="/register" style={linkStyle}>Register</Link>
+                <Link to="/register/user" style={linkStyle}>Register</Link>
                 <Link to="/login" style={linkStyle}>Login</Link>
             </div>
         </nav>

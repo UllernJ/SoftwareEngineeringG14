@@ -1,5 +1,6 @@
-package com.example.softwareg14.map;
+package com.example.softwareg14.map.user;
 
+import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,8 @@ public class User {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/api/user/register")
+    @PostMapping(Endpoint.USER_REGISTER)
     public ResponseEntity<String> user(@RequestBody UserRequest userRequest) {
-        System.out.println("Registering user");
         try {
             userService.createUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
