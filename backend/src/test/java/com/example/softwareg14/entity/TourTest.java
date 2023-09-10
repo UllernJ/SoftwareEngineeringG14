@@ -23,8 +23,8 @@ class TourTest {
         Tour tour = new Tour();
         User user = new User();
         user.setId(1);
-        user.setName("Test");
-        user.setUsername("test");
+        user.setName("Test1");
+        user.setUsername("test1");
         tour.setMaxCapacity(1);
         tour.addAttendant(user);
         User user2 = new User();
