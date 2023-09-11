@@ -23,6 +23,9 @@ public class User {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.USER_REGISTER)
     public ResponseEntity<String> user(@RequestBody UserRequest userRequest) {
+        if (!userRequest.validate()) {
+            return new ResponseEntity<>("Invalid request", HttpStatus.BAD_REQUEST);
+        }
         try {
             userService.createUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);

@@ -5,4 +5,20 @@ public class UserRequest {
     public String name;
     public String username;
     public String password;
+
+    public boolean validate() {
+        if(email == null || email.isEmpty()) {
+            return false;
+        }
+        if(name == null || name.isEmpty()) {
+            return false;
+        }
+        if(username == null || username.isEmpty()) {
+            return false;
+        }
+        if(password == null || password.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }

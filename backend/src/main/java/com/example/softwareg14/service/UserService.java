@@ -15,12 +15,7 @@ public class UserService {
     }
 
     public void createUser(String name, String username, String password, String email) {
-        User user = new User(name, username, password, email);
-        if(!user.validate()) {
-            throw new IllegalArgumentException("Invalid user");
-        } else {
-            jdbcTemplate.update("INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)", name, username, password, email);
-        }
+        jdbcTemplate.update("INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)", name, username, password, email);
     }
 
     public User getUserById(int id) {
