@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserRequestTest {
+class UserMapRequestTest {
 
     //create tests for validate method with all possible cases
     @Test

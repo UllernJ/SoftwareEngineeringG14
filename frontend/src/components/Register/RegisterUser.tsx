@@ -17,16 +17,16 @@ export const RegisterUser = () => {
             })
             const parseRes = await response;
             if (parseRes.status === 200 || parseRes.status === 201) {
-                setMessage('RegisterUser success')
+                setMessage('Register success')
                 setName(null)
                 setUsername(null)
                 setEmail(null)
                 setPassword(null)
             } else {
-                setMessage('RegisterUser failed')
+                setMessage('Register failed')
             }
         } catch (err: any) {
-            setMessage("RegisterUser failed")
+            setMessage("Register failed")
         }
     }
 
