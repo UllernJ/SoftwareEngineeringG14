@@ -23,7 +23,7 @@ export const ToursPage = () => {
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     {toursArr.map((tour: Tour) => (
-                        <div className="col-md-4 mb-4">
+                        <div className="col-md-4 mb-4" key={tour.id}>
                             <div className="card">
                                 <div style={{ height: '250px', overflow: 'hidden' }}>
                                 <img src={tour.image} className="card-img-top" alt={tour.name} />
