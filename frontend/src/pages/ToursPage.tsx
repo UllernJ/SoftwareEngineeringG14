@@ -12,7 +12,6 @@ export const ToursPage = () => {
         });
     }, []);
 
-
     return (
         <>
             <div className="container mt-5">
@@ -20,12 +19,12 @@ export const ToursPage = () => {
                     {toursArr.map((tour: Tour) => (
                         <div key={tour.id} className="col-md-4 mb-4">
                             <div className="card">
-                                <img src={tour.image} className="card-img-top" alt={tour.name} style={cardImageStyle} />
+                                <img src={tour.image} className="card-img-top" alt={tour.name} />
                                 <div className="card-body">
                                     <h5 className="card-title">{tour.name}</h5>
                                     <p className="card-text">{tour.description}</p>
                                     <ul className="list-group list-group-flush">
-                                        <li className="list-group-item">Price: ${tour.price}</li>
+                                        <li className="list-group-item">Price: {tour.price} euro</li>
                                         <li className="list-group-item">Duration: {tour.durationHours} hours</li>
                                         <li className="list-group-item">Max Capacity: {tour.maxCapacity}</li>
                                         <li className="list-group-item">Date: {new Date(tour.date).toLocaleDateString()}</li>
@@ -41,9 +40,4 @@ export const ToursPage = () => {
             </div>
         </>
     );
-};
-
-const cardImageStyle: {} = {
-    height: '220px',
-    objectFit: 'cover'
 };
