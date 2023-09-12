@@ -26,7 +26,6 @@ public class TourService {
 
 
     public List<Tour> getAllTours() {
-        //return a list of Tour, where each Tour is a row in the database, you must also inner join the organization table to get the organization information
         String query = "SELECT "
                 + "  tour.id AS id, "
                 + "  tour.name AS tour_name, "

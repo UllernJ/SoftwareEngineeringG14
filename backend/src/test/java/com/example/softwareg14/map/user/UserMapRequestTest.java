@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapRequestTest {
-
-    //create tests for validate method with all possible cases
     @Test
     public void validateShouldFailIfEmailIsNull() {
         UserRequest userRequest = new UserRequest();
