@@ -1,5 +1,5 @@
 import {User} from "../types/global";
-import {getUser, isUserLoggedIn} from "../utils/User";
+import {getUser, isUserLoggedIn} from "../service/UserService";
 
 export const Home = () => {
 
