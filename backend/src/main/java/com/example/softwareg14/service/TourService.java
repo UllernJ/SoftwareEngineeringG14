@@ -24,27 +24,29 @@ public class TourService {
         jdbcTemplate.update("DELETE FROM tour WHERE id = ?", id);
     }
 
-
     public List<Tour> getAllTours() {
-        String query = "SELECT "
-                + "  tour.id AS id, "
-                + "  tour.name AS tour_name, "
-                + "  tour.description AS tour_description, "
-                + "  tour.durationHours AS tour_durationHours, "
-                + "  tour.price AS tour_price, "
-                + "  tour.image AS tour_image, "
-                + "  tour.location AS tour_location, "
-                + "  tour.maxCapacity AS tour_maxCapacity, "
-                + "  tour.date AS tour_date, "
-                + "  organization.id AS org_id, "
-                + "  organization.name AS org_name, "
-                + "  organization.description AS org_description, "
-                + "  organization.address AS org_address, "
-                + "  organization.website AS org_website, "
-                + "  organization.phone AS org_phone, "
-                + "  organization.email AS org_email "
-                + "FROM tour "
-                + "INNER JOIN organization ON tour.orgId = organization.id";
+        String query = "SELECT " +
+                "tour.id AS id, " +
+                "tour.name AS tour_name, " +
+                "tour.description AS tour_description, " +
+                "tour.durationHours AS tour_durationHours, " +
+                "tour.price AS tour_price, " +
+                "tour.image AS tour_image, " +
+                "tour.location AS tour_location, " +
+                "tour.maxCapacity AS tour_maxCapacity, " +
+                "tour.date AS tour_date, " +
+                "organization.id AS org_id, " +
+                "organization.name AS org_name, " +
+                "organization.description AS org_description, " +
+                "organization.address AS org_address, " +
+                "organization.website AS org_website, " +
+                "organization.phone AS org_phone, " +
+                "organization.email AS org_email, " +
+                "count(userHasTour.userId) as attendingUsers " +
+                "FROM tour " +
+                "INNER JOIN organization ON tour.orgId = organization.id " +
+                "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
+                "GROUP BY tour.id";
         return jdbcTemplate.query(query, (rs, rowNum) -> {
             Tour tour = new Tour();
             tour.setId(rs.getInt("id"));
@@ -55,6 +57,7 @@ public class TourService {
             tour.setImage(rs.getString("tour_image"));
             tour.setLocation(rs.getString("tour_location"));
             tour.setMaxCapacity(rs.getInt("tour_maxCapacity"));
+            tour.setAttendingUsers(rs.getInt("attendingUsers"));
             tour.setDate(null);
 
             Organization organization = new Organization();

@@ -35,7 +35,7 @@ export const ToursPage = () => {
                                 <ul className="list-group list-group-flush">
                                     <li className="list-group-item">Price: {tour.price} euro</li>
                                     <li className="list-group-item">Duration: {tour.durationHours} hours</li>
-                                    <li className="list-group-item">Participants: {tour.usersAttending.length}/{tour.maxCapacity}</li>
+                                    <li className="list-group-item">Participants: {tour.attendingUsers}/{tour.maxCapacity}</li>
                                     <li className="list-group-item">Date: {new Date(tour.date).toLocaleDateString()}</li>
                                 </ul>
                                 <div className="card-footer">

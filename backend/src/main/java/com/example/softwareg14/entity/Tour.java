@@ -17,7 +17,7 @@ public class Tour {
     private String location;
     private String category;
     private Organization organization;
-    private List<User> usersAttending = new ArrayList<>();
+    private int attendingUsers;
     private int maxCapacity;
     private LocalDate date;
 
@@ -42,14 +42,15 @@ public class Tour {
 
     }
 
-    public void addAttendant(User user) {
-        if(usersAttending.size() >= maxCapacity && maxCapacity != 0) {
-            throw new RuntimeException("Tour is full");
-        } else if(usersAttending.contains(user)) {
-            throw new RuntimeException("User is already attending");
-        } else {
-            usersAttending.add(user);
-        }
-    }
+    //must be rewritten somwhere else.
+//    public void addAttendant(User user) {
+//        if(usersAttending.size() >= maxCapacity && maxCapacity != 0) {
+//            throw new RuntimeException("Tour is full");
+//        } else if(usersAttending.contains(user)) {
+//            throw new RuntimeException("User is already attending");
+//        } else {
+//            usersAttending.add(user);
+//        }
+//    }
 
 }
