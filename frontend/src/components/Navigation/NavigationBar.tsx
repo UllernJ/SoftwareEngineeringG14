@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {isUserLoggedIn} from "../../utils/User";
+import {isUserLoggedIn} from "../../service/UserService";
 
 export const NavigationBar = () => {
 
@@ -12,6 +12,7 @@ export const NavigationBar = () => {
         <nav style={navStyle}>
             <div className="container" style={containerStyle}>
                 <Link to="/" style={linkStyle}>Home</Link>
+                <Link to="/tours" style={linkStyle}>Tours</Link>
                 <div style={spacerStyle}></div>
                 {!isUserLoggedIn() ? (
                     <>
