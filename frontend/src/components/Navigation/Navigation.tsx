@@ -4,6 +4,7 @@ import {RegisterUserPage} from "../../pages/RegisterUserPage";
 import {RegisterOrganizationPage} from "../../pages/RegisterOrganizationPage";
 import {ToursPage} from "../../pages/ToursPage";
 import {Login} from "../Login";
+import {OrganizationPage} from "../../pages/OrganizationPage";
 
 export const Navigation = () => {
 
@@ -14,6 +15,7 @@ export const Navigation = () => {
             <Route path="/register/organization" element={<RegisterOrganizationPage/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/tours" element={<ToursPage />} />
+            <Route path="/organization/:id" element={<OrganizationPage />} />
         </Routes>
     )
 }

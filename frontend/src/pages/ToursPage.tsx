@@ -2,6 +2,7 @@ import {TourService} from "../service/TourService";
 import {Tour} from "../types/global";
 import {useEffect, useState} from "react";
 import {getUser} from "../service/UserService";
+import {Link} from "react-router-dom";
 
 export const ToursPage = () => {
     const [toursArr, setToursArr] = useState<Tour[]>([]);
@@ -37,9 +38,11 @@ export const ToursPage = () => {
                                     <li className="list-group-item">Duration: {tour.durationHours} hours</li>
                                     <li className="list-group-item">Participants: {tour.attendingUsers}/{tour.maxCapacity}</li>
                                     <li className="list-group-item">Date: {new Date(tour.date).toLocaleDateString()}</li>
+                                    <li className="list-group-item">Hosted by: {tour.organization.name}</li>
                                 </ul>
-                                <div className="card-footer">
+                                <div className="card-footer d-flex justify-content-between">
                                     <button className="btn btn-primary" onClick={() => addAttendee(tour.id)}>Attend</button>
+                                    <Link to={"/organization/" + tour.id} className="btn btn-primary">Organization</Link>
                                 </div>
                             </div>
                         </div>

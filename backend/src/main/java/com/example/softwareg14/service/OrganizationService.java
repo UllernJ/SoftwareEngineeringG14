@@ -42,4 +42,18 @@ public class OrganizationService {
         });
     }
 
+    public Organization getOrganizationById(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE id = ?", (rs, rowNum) -> {
+            Organization organization = new Organization();
+            organization.setId(rs.getInt("id"));
+            organization.setName(rs.getString("name"));
+            organization.setDescription(rs.getString("description"));
+            organization.setAddress(rs.getString("address"));
+            organization.setWebsite(rs.getString("website"));
+            organization.setPhone(rs.getString("phone"));
+            organization.setEmail(rs.getString("email"));
+            return organization;
+        }, id);
+    }
+
 }

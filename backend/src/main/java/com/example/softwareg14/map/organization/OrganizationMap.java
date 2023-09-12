@@ -45,4 +45,15 @@ public class OrganizationMap {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(Endpoint.ORGANIZATION_BY_ID)
+    public ResponseEntity<Organization> getOrganizationById(@PathVariable("id") int id) {
+        try {
+            Organization organization = organizationService.getOrganizationById(id);
+            return new ResponseEntity<>(organization, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
