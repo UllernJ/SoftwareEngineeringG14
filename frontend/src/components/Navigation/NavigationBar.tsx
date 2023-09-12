@@ -9,45 +9,32 @@ export const NavigationBar = () => {
     }
 
     return (
-        <nav style={navStyle}>
-            <div className="container" style={containerStyle}>
-                <Link to="/" style={linkStyle}>Home</Link>
-                <Link to="/tours" style={linkStyle}>Tours</Link>
-                <div style={spacerStyle}></div>
-                {!isUserLoggedIn() ? (
-                    <>
-                    <Link to="/register/user" style={linkStyle}>Register</Link>
-                    <Link to="/login" style={linkStyle}>Login</Link>
-                    </>
-                ) : (
-                    <>
-                    <button onClick={handleLogout}>
-                        Logout
-                    </button>
-                    </>
-                )}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container">
+                <Link className="navbar-brand" to="/">Home</Link>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/tours">Tours</Link>
+                        </li>
+                        {!isUserLoggedIn() ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/register/user">Register</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/login">Login</Link>
+                                </li>
+                            </>
+                        ) : (
+                            <li className="nav-item">
+                                <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </div>
         </nav>
     );
 }
 
-const navStyle = {
-    backgroundColor: '#f8f9fa',
-    padding: '10px 0',
-};
-
-const containerStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-};
-
-const linkStyle = {
-    textDecoration: 'none',
-    color: '#333',
-    margin: '0 10px',
-};
-
-const spacerStyle = {
-    flex: '1',
-};

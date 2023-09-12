@@ -25,4 +25,5 @@ export type Tour = {
     organization: Organization;
     maxCapacity: number;
     date: Date;
+    usersAttending: User[];
 }
