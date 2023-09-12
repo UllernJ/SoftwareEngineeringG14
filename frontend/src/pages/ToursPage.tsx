@@ -1,18 +1,30 @@
 import {TourService} from "../service/TourService";
 import {Tour} from "../types/global";
 import {useEffect, useState} from "react";
-import {getUser} from "../service/UserService";
+import {getUser, isUserLoggedIn} from "../service/UserService";
 import {Link} from "react-router-dom";
 
 export const ToursPage = () => {
     const [toursArr, setToursArr] = useState<Tour[]>([]);
+    const [attendingTours, setAttendingTours] = useState<Tour[]>([]);
     const user = getUser();
 
     useEffect(() => {
         TourService.getTours().then(res => {
             setToursArr(res);
         });
-    }, []);
+
+        if(isUserLoggedIn()) {
+            TourService.getToursByUserId(user.id).then(res => {
+                setAttendingTours(res);
+            });
+        }
+
+    }, [user.id]);
+
+    const isAttending = (tourId: number) => {
+        return attendingTours.some(tour => tour.id === tourId);
+    }
 
     const addAttendee = (tourId: number) => {
         console.log(tourId)
@@ -41,7 +53,11 @@ export const ToursPage = () => {
                                     <li className="list-group-item">Hosted by: {tour.organization.name}</li>
                                 </ul>
                                 <div className="card-footer d-flex justify-content-between">
-                                    <button className="btn btn-primary" onClick={() => addAttendee(tour.id)}>Attend</button>
+                                    {isUserLoggedIn() && isAttending(tour.id) ? (
+                                        <button className="btn btn-primary" disabled>Attending</button>
+                                    ) : (
+                                        <button className="btn btn-primary" onClick={() => addAttendee(tour.id)}>Attend</button>
+                                    )}
                                     <Link to={"/organization/" + tour.id} className="btn btn-primary">Organization</Link>
                                 </div>
                             </div>
