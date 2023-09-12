@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {User} from "../types/global";
 
 export const Login = () => {
     const [username, setUsername] = useState('')
@@ -18,6 +19,9 @@ export const Login = () => {
                 console.log('Login success')
                 setUsername('')
                 setPassword('')
+                const user: User = await response.json()
+                sessionStorage.setItem('user', JSON.stringify(user))
+                window.location.href = '/'
             } else {
                 console.log('Login failed')
             }

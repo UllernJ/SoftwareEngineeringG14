@@ -1,14 +1,30 @@
 import {Link} from "react-router-dom";
+import {isUserLoggedIn} from "../../utils/User";
 
 export const NavigationBar = () => {
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('user');
+        window.location.reload();
+    }
 
     return (
         <nav style={navStyle}>
             <div className="container" style={containerStyle}>
                 <Link to="/" style={linkStyle}>Home</Link>
                 <div style={spacerStyle}></div>
-                <Link to="/register/user" style={linkStyle}>Register</Link>
-                <Link to="/login" style={linkStyle}>Login</Link>
+                {!isUserLoggedIn() ? (
+                    <>
+                    <Link to="/register/user" style={linkStyle}>Register</Link>
+                    <Link to="/login" style={linkStyle}>Login</Link>
+                    </>
+                ) : (
+                    <>
+                    <button onClick={handleLogout}>
+                        Logout
+                    </button>
+                    </>
+                )}
             </div>
         </nav>
     );
