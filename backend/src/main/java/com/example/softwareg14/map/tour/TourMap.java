@@ -5,10 +5,7 @@ import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +34,25 @@ public class TourMap {
         try {
             List<Tour> tours = tourService.getToursByUserId(id);
             return ResponseEntity.ok(tours);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.ADD_USER_TO_TOUR)
+    public ResponseEntity<String> addUserToTour(@RequestParam("userId") int userId, @RequestParam("tourId") int tourId) {
+        try {
+            String checkQuery = "SELECT COUNT(*) FROM userHasTour WHERE userId = ? AND tourId = ?";
+            int existingAttendeeCount = tourService.countAttendees(userId, tourId);
+
+            if (existingAttendeeCount > 0) {
+                return ResponseEntity.badRequest().body("User is already attending the tour.");
+            } else {
+
+                tourService.addUserToTour(userId, tourId);
+                return ResponseEntity.ok("User added to the tour successfully.");
+            }
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

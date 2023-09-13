@@ -21,4 +21,6 @@ public class Endpoint {
     public static final String TOURS_BY_ORGANIZATION_ID = apiPath + "tours/organization/{id}";
     public static final String TOURS_BY_USER_ID = apiPath + "tours/user/{id}";
 
+    public static final String ADD_USER_TO_TOUR = apiPath + "tours/user/add/{id}";
+
 }

@@ -126,6 +126,24 @@ public class TourService {
         }, id);
 
     }
+    public int countAttendees(int userId, int tourId) {
+        String query = "SELECT COUNT(*) FROM userHasTour WHERE userId = ? AND tourId = ?";
+        return jdbcTemplate.queryForObject(query, Integer.class, userId, tourId);
+    }
+    public void addUserToTour(int userId, int tourId) {
+        jdbcTemplate.update("INSERT INTO userHasTour (userId, tourId) VALUES (?, ?)", userId, tourId);
+
+        jdbcTemplate.update("UPDATE tour SET attendee = attendee + 1 WHERE tourId = ?", tourId);
+    }
+
+    public void removeUserFromTour(int userId, int tourId) {
+        jdbcTemplate.update("DELETE FROM userHasTour WHERE userId = ? AND tourId = ?", userId, tourId);
+
+        jdbcTemplate.update("UPDATE tour SET attendee = attendee - 1 WHERE tourId = ?", tourId);
+    }
+
+
+
 
 
 }
