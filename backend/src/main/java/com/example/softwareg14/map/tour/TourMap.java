@@ -41,9 +41,11 @@ public class TourMap {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.ADD_USER_TO_TOUR)
-    public ResponseEntity<String> addUserToTour(@RequestParam("userId") int userId, @RequestParam("tourId") int tourId) {
+    public ResponseEntity<String> addUserToTour(@RequestBody TourRequest tourRequest){
         try {
-            String checkQuery = "SELECT COUNT(*) FROM userHasTour WHERE userId = ? AND tourId = ?";
+            int userId = tourRequest.userId;
+            int tourId = tourRequest.tourId;
+
             int existingAttendeeCount = tourService.countAttendees(userId, tourId);
 
             if (existingAttendeeCount > 0) {

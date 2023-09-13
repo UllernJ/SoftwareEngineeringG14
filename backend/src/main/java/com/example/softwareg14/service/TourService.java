@@ -133,13 +133,11 @@ public class TourService {
     public void addUserToTour(int userId, int tourId) {
         jdbcTemplate.update("INSERT INTO userHasTour (userId, tourId) VALUES (?, ?)", userId, tourId);
 
-        jdbcTemplate.update("UPDATE tour SET attendee = attendee + 1 WHERE tourId = ?", tourId);
     }
 
     public void removeUserFromTour(int userId, int tourId) {
         jdbcTemplate.update("DELETE FROM userHasTour WHERE userId = ? AND tourId = ?", userId, tourId);
 
-        jdbcTemplate.update("UPDATE tour SET attendee = attendee - 1 WHERE tourId = ?", tourId);
     }
 
 
