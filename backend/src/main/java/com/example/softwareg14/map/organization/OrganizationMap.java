@@ -1,7 +1,9 @@
 package com.example.softwareg14.map.organization;
 
 import com.example.softwareg14.entity.Organization;
+import com.example.softwareg14.entity.User;
 import com.example.softwareg14.map.Endpoint;
+import com.example.softwareg14.map.user.UserRequest;
 import com.example.softwareg14.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,21 @@ public class OrganizationMap {
             return new ResponseEntity("Organization registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity("Failed to register organization", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.ORGANIZATION_LOGIN)
+    public ResponseEntity<Organization> login(@RequestBody OrganizationRequest organizationRequest) {
+        try {
+            if(organizationService.validateOrganization(organizationRequest.username, organizationRequest.password)) {
+                Organization organization = organizationService.getOrganizationByUsername(organizationRequest.username);
+                return new ResponseEntity<>(organization, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

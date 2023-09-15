@@ -140,8 +140,10 @@ public class TourService {
 
     }
 
+    public int tourExists(int tourId) {
+        String query = "SELECT COUNT(*) FROM tour WHERE id = ?";
+        return jdbcTemplate.queryForObject(query, Integer.class, tourId);
+        }
+    }
 
 
-
-
-}

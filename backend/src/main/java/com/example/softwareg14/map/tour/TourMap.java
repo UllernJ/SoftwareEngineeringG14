@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -45,13 +46,10 @@ public class TourMap {
         try {
             int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
-
             int existingAttendeeCount = tourService.countAttendees(userId, tourId);
-
             if (existingAttendeeCount > 0) {
                 return ResponseEntity.badRequest().body("User is already attending the tour.");
             } else {
-
                 tourService.addUserToTour(userId, tourId);
                 return ResponseEntity.ok("User added to the tour successfully.");
             }
@@ -60,10 +58,31 @@ public class TourMap {
         }
     }
 
-
-
-
-
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.CREATE_TOUR)
+    public ResponseEntity<String> createTour(@RequestBody Tour tour) {
+        try {
+            String name = tour.getName();
+            String description = tour.getDescription();
+            int durationHours = tour.getDurationHours();
+            int price = tour.getPrice();
+            String image = tour.getImage();
+            String location = tour.getLocation();
+            int orgId = tour.getOrganization().getId();
+            int maxCapacity = tour.getMaxCapacity();
+            LocalDate date = tour.getDate();
+            tourService.createTour(name, description, durationHours, price, image, location, orgId, maxCapacity, date);
+            return ResponseEntity.ok("Tour created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
 
 }
+
+
+
+
+
+
