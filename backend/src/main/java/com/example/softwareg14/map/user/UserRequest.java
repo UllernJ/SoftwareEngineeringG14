@@ -20,9 +20,6 @@ public class UserRequest {
         if(password == null || password.isEmpty()) {
             return false;
         }
-        if(id == 0) {
-            return false;}
-
         return true;
     }
 }

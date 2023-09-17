@@ -1,15 +1,13 @@
 package com.example.softwareg14.map.user;
 
+import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.User;
 import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserMap {
@@ -20,6 +18,19 @@ public class UserMap {
     public UserMap(UserService userService) {
         this.userService = userService;
     }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(Endpoint.USER_BY_ID)
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+        try {
+            User user = userService.getUserById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.USER_REGISTER)
