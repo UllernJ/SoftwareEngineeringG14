@@ -58,7 +58,7 @@ export const ToursPage = () => {
                                     ) : (
                                         <button className="btn btn-primary" onClick={() => addAttendee(tour.id)}>Attend</button>
                                     )}
-                                    <Link to={"/organization/" + tour.id} className="btn btn-primary">Organization</Link>
+                                    <Link to={"/organization/" + tour.organization.id} className="btn btn-primary">Organization</Link>
                                 </div>
                             </div>
                         </div>

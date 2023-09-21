@@ -15,6 +15,8 @@ public class Endpoint {
     public static final String ORGANIZATION_UPDATE = apiPath + "organization/update";
     public static final String TOURS_ALL = apiPath + "tour/all";
     public static final String CREATE_TOUR = apiPath + "tour/create";
+    public static final String TOURS_ALL = apiPath + "tours/all";
+    public static final String CREATE_TOUR = apiPath + "tour/create";
     public static final String TOUR_REGISTER_ATTENDEE = apiPath + "tour/register";
     public static final String TOUR_UNREGISTER_ATTENDEE = apiPath + "tour/unregister";
     public static final String TOUR_BY_ID = apiPath + "tour/{id}";

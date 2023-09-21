@@ -44,7 +44,7 @@ public class TourService {
                 "count(userHasTour.userId) as attendingUsers " +
                 "FROM tour " +
                 "INNER JOIN organization ON tour.orgId = organization.id " +
-                "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
+                "LEFT JOIN userHasTour on userHasTour.tourId = tour.id " +
                 "GROUP BY tour.id";
         return jdbcTemplate.query(query, (rs, rowNum) -> {
             Tour tour = new Tour();
