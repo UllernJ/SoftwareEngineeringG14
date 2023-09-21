@@ -1,34 +1,42 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import {User} from "../types/global";
+import {organizationLogin, userLogin} from "../service/LoginService";
 
 export const Login = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState<string>('')
+    const [username, setUsername] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [isOrganization, setIsOrganization] = useState<boolean>(false)
 
     const handleLogin = async (e: any) => {
         e.preventDefault()
-        try {
-            const body = {username, password}
-            const response = await fetch('http://localhost:8080/api/user/login', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(body)
+        if (isOrganization) {
+            organizationLogin(email, password).then(res => {
+                if (res) {
+                    sessionStorage.setItem('organization', JSON.stringify(res))
+                    window.location.href = '/'
+                }
             })
-            const parseRes = await response;
-            if (parseRes.status === 200 || parseRes.status === 201) {
-                console.log('Login success')
-                setUsername('')
-                setPassword('')
-                const user: User = await response.json()
-                sessionStorage.setItem('user', JSON.stringify(user))
-                window.location.href = '/'
-            } else {
-                console.log('Login failed')
-            }
-        } catch (err: any) {
-            console.log("Login failed")
+        } else {
+            userLogin(username, password).then(res => {
+                if (res) {
+                    sessionStorage.setItem('user', JSON.stringify(res))
+                    window.location.href = '/'
+                }
+            })
         }
     }
+
+    const switchToOrg = () => {
+        setIsOrganization(!isOrganization)
+    }
+
+    useEffect(() => {
+        if (sessionStorage.getItem('user')) {
+            window.location.href = '/'
+        }
+    }, [])
+
 
     return (
         <div className="container mt-5">
@@ -36,19 +44,32 @@ export const Login = () => {
                 <div className="col-md-6">
                     <div className="card">
                         <div className="card-header">
-                            <h1>Login</h1>
+                            <h1>Login - {isOrganization ? "Organization" : "User"}</h1>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleLogin}>
-                                <div className="form-group">
-                                    <label htmlFor="username">Username</label>
-                                    <input type="username"
-                                           className="form-control"
-                                           id="username"
-                                           value={username}
-                                           onChange={(e) => setUsername(e.target.value)}
-                                           placeholder="Username"/>
-                                </div>
+                                {isOrganization ? (
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input type="email"
+                                               className="form-control"
+                                               id="email"
+                                               value={email}
+                                               onChange={(e) => setEmail(e.target.value)}
+                                               placeholder="Email"/>
+                                    </div>
+                                ) : (
+                                    <div className="form-group">
+                                        <label htmlFor="username">Username</label>
+                                        <input type="username"
+                                               className="form-control"
+                                               id="username"
+                                               value={username}
+                                               onChange={(e) => setUsername(e.target.value)}
+                                               placeholder="Username"/>
+                                    </div>
+                                )}
+
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
                                     <input type="password"
@@ -58,7 +79,12 @@ export const Login = () => {
                                            onChange={(e) => setPassword(e.target.value)}
                                            placeholder="Password"/>
                                 </div>
-                                <button type="submit" className="btn btn-primary">Login</button>
+                                <button type="submit" className="btn btn-primary me-lg-4">
+                                    Login
+                                </button>
+                                <button type="button" className="btn btn-primary" onClick={switchToOrg}>
+                                    {!isOrganization ? 'Switch to Organization login' : 'Switch to User login'}
+                                </button>
                             </form>
                         </div>
                     </div>

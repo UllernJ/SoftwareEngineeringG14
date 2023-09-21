@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class TourService {
-
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     public TourService(JdbcTemplate jdbcTemplate) {
@@ -126,6 +125,17 @@ public class TourService {
         }, id);
 
     }
-
-
+    public boolean isUserInTour(int userId, int tourId) {
+        String query = "SELECT COUNT(*) FROM userHasTour WHERE userId = ? AND tourId = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, userId, tourId);
+        return count > 0;
+    }
+    public void addUserToTour(int userId, int tourId) {
+        jdbcTemplate.update("INSERT INTO userHasTour (userId, tourId) VALUES (?, ?)", userId, tourId);
+    }
+    public void removeUserFromTour(int userId, int tourId) {
+        jdbcTemplate.update("DELETE FROM userHasTour WHERE userId = ? AND tourId = ?", userId, tourId);
+    }
 }
+
+
