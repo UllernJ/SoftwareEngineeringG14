@@ -2,6 +2,7 @@ package com.example.softwareg14.service;
 
 import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.User;
+import com.example.softwareg14.map.organization.OrganizationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,10 @@ public class OrganizationService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createOrganization(String name, String description, String address, String website, String phone, String email, String password) {
-        jdbcTemplate.update("INSERT INTO organization (name, description, address, website, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)", name, description, address, website, phone, email, password);
+    public void createOrganization(OrganizationRequest organizationRequest) {
+        //password = hashPassword(password); todo fix
+        jdbcTemplate.update("INSERT INTO organization (name, description, address, website, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                organizationRequest.name, organizationRequest.description, organizationRequest.address, organizationRequest.website, organizationRequest.phone, organizationRequest.email, organizationRequest.password);
     }
 
     public void deleteOrganizationById(int id) {
@@ -31,13 +34,13 @@ public class OrganizationService {
         jdbcTemplate.update("UPDATE organization SET name = ?, description = ?, address = ?, phone = ?, email = ? WHERE id = ?", name, description, address, phone, email, id);
     }
 
-    public boolean validateOrganization(String username, String password) throws NoSuchAlgorithmException {
-        password = hashPassword(password);
-        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE username = ? AND password = ?", new Object[]{username, password}, Integer.class) > 0;
+    public boolean validateOrganization(String email, String password) throws NoSuchAlgorithmException {
+        //password = hashPassword(password); todo fix
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE email = ? AND password = ?", new Object[]{email, password}, Integer.class) > 0;
     }
 
-    public Organization getOrganizationByEmail(String username) {
-        return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE email = ?", new Object[]{username}, (rs, rowNum) -> {
+    public Organization getOrganizationByEmail(String email) {
+        return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE email = ?", new Object[]{email}, (rs, rowNum) -> {
             Organization organization = new Organization();
             organization.setId(rs.getInt("id"));
             organization.setName(rs.getString("name"));

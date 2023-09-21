@@ -2,7 +2,6 @@ package com.example.softwareg14.map.organization;
 
 public class OrganizationRequest {
     public String name;
-    public String username;
     public String address;
     public String phone;
     public String email;

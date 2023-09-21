@@ -1,38 +1,43 @@
 import React, { useState } from 'react';
 
 const RegisterOrganization = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        address: '',
-        phone: '',
-        email: '',
-        website: '',
-        description: '',
-        password: '',
-    });
-    const [message, setMessage] = useState<string>("");
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [website, setWebsite] = useState('');
+    const [description, setDescription] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState<string>('');
 
-    const handleChange = (e: any) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = fetch('http://localhost:8080/api/organization/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-        });
-        const parseRes = await response;
-        if(parseRes.status === 200 || parseRes.status === 201){
-            setMessage("Register success")
-            //redirect after...
-        } else {
-            setMessage("Register failed")
+
+        try {
+            const formData = {
+                name,
+                address,
+                phone,
+                email,
+                website,
+                description,
+                password,
+            };
+
+            const response = await fetch('http://localhost:8080/api/organization/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.status === 200 || response.status === 201) {
+                setMessage('Register success');
+                window.location.href = '/login';
+            } else {
+                setMessage('Register failed');
+            }
+        } catch (error) {
+            setMessage('Register failed');
         }
     };
 
@@ -53,8 +58,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="name"
                                         name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -65,8 +70,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="address"
                                         name="address"
-                                        value={formData.address}
-                                        onChange={handleChange}
+                                        value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -77,8 +82,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="phone"
                                         name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -89,8 +94,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="email"
                                         name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -101,8 +106,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="website"
                                         name="website"
-                                        value={formData.website}
-                                        onChange={handleChange}
+                                        value={website}
+                                        onChange={(e) => setWebsite(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -112,8 +117,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="description"
                                         name="description"
-                                        value={formData.description}
-                                        onChange={handleChange}
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -124,8 +129,8 @@ const RegisterOrganization = () => {
                                         className="form-control"
                                         id="password"
                                         name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         required
                                     />
                                 </div>
