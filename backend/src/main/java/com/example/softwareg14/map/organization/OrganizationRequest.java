@@ -14,9 +14,6 @@ public class OrganizationRequest {
         if(name == null || name.isEmpty()) {
             return false;
         }
-        if(username == null || username.isEmpty()) {
-            return false;
-        }
         if(address == null || address.isEmpty()) {
             return false;
         }

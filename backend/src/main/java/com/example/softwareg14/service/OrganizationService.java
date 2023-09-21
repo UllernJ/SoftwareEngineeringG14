@@ -36,12 +36,11 @@ public class OrganizationService {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE username = ? AND password = ?", new Object[]{username, password}, Integer.class) > 0;
     }
 
-    public Organization getOrganizationByUsername(String username) {
-        return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE username = ?", new Object[]{username}, (rs, rowNum) -> {
+    public Organization getOrganizationByEmail(String username) {
+        return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE email = ?", new Object[]{username}, (rs, rowNum) -> {
             Organization organization = new Organization();
             organization.setId(rs.getInt("id"));
             organization.setName(rs.getString("name"));
-            organization.setUsername(rs.getString("username"));
             organization.setEmail(rs.getString("email"));
             return organization;
         });

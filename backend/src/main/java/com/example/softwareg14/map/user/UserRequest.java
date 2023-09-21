@@ -5,7 +5,6 @@ public class UserRequest {
     public String name;
     public String username;
     public String password;
-    public int id;
 
     public boolean validate() {
         if(email == null || email.isEmpty()) {

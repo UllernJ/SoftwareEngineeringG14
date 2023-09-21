@@ -40,8 +40,8 @@ public class OrganizationMap {
     @PostMapping(Endpoint.ORGANIZATION_LOGIN)
     public ResponseEntity<Organization> login(@RequestBody OrganizationRequest organizationRequest) {
         try {
-            if(organizationService.validateOrganization(organizationRequest.username, organizationRequest.password)) {
-                Organization organization = organizationService.getOrganizationByUsername(organizationRequest.username);
+            if(organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
+                Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
                 return new ResponseEntity<>(organization, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);

@@ -46,8 +46,9 @@ public class TourMap {
         try {
             int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
-            int existingAttendeeCount = tourService.countAttendees(userId, tourId);
-            if (existingAttendeeCount > 0) {
+
+            boolean isUserInTour = tourService.isUserInTour(userId, tourId);
+            if (isUserInTour) {
                 return ResponseEntity.badRequest().body("User is already attending the tour.");
             } else {
                 tourService.addUserToTour(userId, tourId);
@@ -77,8 +78,6 @@ public class TourMap {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-
 }
 
 
