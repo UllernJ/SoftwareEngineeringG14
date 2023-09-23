@@ -1,34 +1,44 @@
-import {TourService} from "../service/TourService";
-import {Tour} from "../types/global";
-import {useEffect, useState} from "react";
-import {getUser, isUserLoggedIn} from "../service/UserService";
-import {Link} from "react-router-dom";
+import { TourService } from "../service/TourService";
+import { Tour } from "../types/global";
+import { useEffect, useState } from "react";
+import { getUser, isUserLoggedIn } from "../service/UserService";
+import { Link } from "react-router-dom";
 
 export const ToursPage = () => {
     const [toursArr, setToursArr] = useState<Tour[]>([]);
     const [attendingTours, setAttendingTours] = useState<Tour[]>([]);
+    const [hoveredTourId, setHoveredTourId] = useState<number | null>(null);
     const user = getUser();
 
     useEffect(() => {
+        if (toursArr.length > 0) {
+            return;
+        }
         TourService.getTours().then(res => {
             setToursArr(res);
         });
 
-        if(isUserLoggedIn()) {
+        if (isUserLoggedIn()) {
             TourService.getToursByUserId(user.id).then(res => {
                 setAttendingTours(res);
             });
         }
-
-    }, [user.id]);
+    }, [user.id, toursArr.length]);
 
     const isAttending = (tourId: number) => {
         return attendingTours.some(tour => tour.id === tourId);
     }
 
     const addAttendee = (tourId: number) => {
-        console.log(tourId)
-        console.log(user.id)
+        TourService.addAttendee(tourId).then(res => {
+            if (res.status === 200) {
+                setToursArr([]);
+            }
+        });
+    }
+
+    const removeAttendee = (tourId: number) => {
+        // Remove attendee
     }
 
     return (
@@ -39,7 +49,7 @@ export const ToursPage = () => {
                         <div className="col-md-4 mb-4" key={tour.id}>
                             <div className="card">
                                 <div style={{ height: '250px', overflow: 'hidden' }}>
-                                <img src={tour.image} className="card-img-top" alt={tour.name} />
+                                    <img src={tour.image} className="card-img-top" alt={tour.name} />
                                 </div>
                                 <div className="card-body">
                                     <h5 className="card-title">{tour.name}</h5>
@@ -54,9 +64,21 @@ export const ToursPage = () => {
                                 </ul>
                                 <div className="card-footer d-flex justify-content-between">
                                     {isUserLoggedIn() && isAttending(tour.id) ? (
-                                        <button className="btn btn-primary" disabled>Attending</button>
+                                        <button
+                                            className={`btn btn-primary ${hoveredTourId === tour.id ? 'custom-hover' : ''}`}
+                                            onClick={() => removeAttendee(tour.id)}
+                                            onMouseEnter={() => setHoveredTourId(tour.id)} // Set the currently hovered tour
+                                            onMouseLeave={() => setHoveredTourId(null)} // Reset when mouse leaves
+                                        >
+                                            {hoveredTourId === tour.id ? 'Remove' : 'Attending'}
+                                        </button>
                                     ) : (
-                                        <button className="btn btn-primary" onClick={() => addAttendee(tour.id)}>Attend</button>
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={() => addAttendee(tour.id)}
+                                        >
+                                            Attend
+                                        </button>
                                     )}
                                     <Link to={"/organization/" + tour.organization.id} className="btn btn-primary">Organization</Link>
                                 </div>
