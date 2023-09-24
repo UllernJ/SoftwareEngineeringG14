@@ -1,5 +1,10 @@
 package com.example.softwareg14.map.organization;
 
+import com.example.softwareg14.map.Error;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrganizationRequest {
     public String name;
     public String address;
@@ -9,28 +14,29 @@ public class OrganizationRequest {
     public String description;
     public String password;
 
-    public boolean validate() {
+    public List<Error> validate() {
+        List<Error> errors = new ArrayList<>();
         if(name == null || name.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_NAME);
         }
         if(address == null || address.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_ADDRESS);
         }
         if(phone == null || phone.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_PHONE);
         }
         if(email == null || email.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_EMAIL);
         }
         if(website == null || website.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_WEBSITE);
         }
         if(description == null || description.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_DESCRIPTION);
         }
         if(password == null || password.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_PASSWORD);
         }
-        return true;
+        return errors;
     }
 }

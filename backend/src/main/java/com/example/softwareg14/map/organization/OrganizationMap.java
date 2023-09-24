@@ -3,6 +3,7 @@ package com.example.softwareg14.map.organization;
 import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.User;
 import com.example.softwareg14.map.Endpoint;
+import com.example.softwareg14.map.Error;
 import com.example.softwareg14.map.user.UserRequest;
 import com.example.softwareg14.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,9 @@ public class OrganizationMap {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.ORGANIZATION_REGISTER)
     public ResponseEntity<String> organization(@RequestBody OrganizationRequest organizationRequest) {
-        if(!organizationRequest.validate()) {
-            return new ResponseEntity("Invalid request", HttpStatus.BAD_REQUEST);
+        List<Error> errors = organizationRequest.validate();
+        if(!errors.isEmpty()) {
+            return new ResponseEntity(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
             organizationService.createOrganization(organizationRequest);

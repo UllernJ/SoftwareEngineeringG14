@@ -1,6 +1,9 @@
 package com.example.softwareg14.map.organization;
 
+import com.example.softwareg14.map.Error;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +19,8 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertTrue(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.isEmpty());
     }
 
     @Test
@@ -29,7 +33,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_NAME));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -42,7 +48,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_NAME));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -55,7 +63,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_ADDRESS));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -68,7 +78,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_ADDRESS));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -81,7 +93,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_PHONE));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -94,7 +108,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_PHONE));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -107,7 +123,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_EMAIL));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -120,7 +138,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_EMAIL));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -133,7 +153,9 @@ class OrganizationMapRequestTest {
         request.website = "";
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_WEBSITE));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -146,7 +168,9 @@ class OrganizationMapRequestTest {
         request.website = null;
         request.description = "description";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_WEBSITE));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -159,7 +183,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "";
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_DESCRIPTION));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -172,7 +198,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = null;
         request.password = "password";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_DESCRIPTION));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -185,7 +213,9 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = "";
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_PASSWORD));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -198,6 +228,8 @@ class OrganizationMapRequestTest {
         request.website = "website";
         request.description = "description";
         request.password = null;
-        assertFalse(request.validate());
+        List<Error> errors = request.validate();
+        assertTrue(errors.contains(Error.MISSING_PASSWORD));
+        assertEquals(1, errors.size());
     }
 }

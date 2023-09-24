@@ -3,11 +3,14 @@ package com.example.softwareg14.map.user;
 import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.User;
 import com.example.softwareg14.map.Endpoint;
+import com.example.softwareg14.map.Error;
 import com.example.softwareg14.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserMap {
@@ -34,9 +37,10 @@ public class UserMap {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.USER_REGISTER)
-    public ResponseEntity<String> user(@RequestBody UserRequest userRequest) {
-        if (!userRequest.validate()) {
-            return new ResponseEntity<>("Invalid request", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> register(@RequestBody UserRequest userRequest) {
+        List<Error> errors = userRequest.validate();
+        if (!errors.isEmpty()) {
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
             userService.createUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);

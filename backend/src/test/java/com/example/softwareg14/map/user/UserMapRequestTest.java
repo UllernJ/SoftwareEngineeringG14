@@ -1,6 +1,9 @@
 package com.example.softwareg14.map.user;
 
+import com.example.softwareg14.map.Error;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +15,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "username";
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_EMAIL));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfEmailIsEmpty() {
@@ -21,7 +26,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "username";
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_EMAIL));
+        assertEquals(1, errors.size());
     }
 
     @Test
@@ -31,7 +38,9 @@ class UserMapRequestTest {
         userRequest.name = null;
         userRequest.username = "username";
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_NAME));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfNameIsEmpty() {
@@ -40,7 +49,9 @@ class UserMapRequestTest {
         userRequest.name = "";
         userRequest.username = "username";
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_NAME));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfUsernameIsNull() {
@@ -49,7 +60,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = null;
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_USERNAME));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfUsernameIsEmpty() {
@@ -58,7 +71,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "";
         userRequest.password = "password";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_USERNAME));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfPasswordIsNull() {
@@ -67,7 +82,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "username";
         userRequest.password = null;
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_PASSWORD));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldFailIfPasswordIsEmpty() {
@@ -76,7 +93,9 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "username";
         userRequest.password = "";
-        assertFalse(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.contains(Error.MISSING_PASSWORD));
+        assertEquals(1, errors.size());
     }
     @Test
     public void validateShouldPassIfAllFieldsAreFilled() {
@@ -85,7 +104,8 @@ class UserMapRequestTest {
         userRequest.name = "name";
         userRequest.username = "username";
         userRequest.password = "password";
-        assertTrue(userRequest.validate());
+        List<Error> errors = userRequest.validate();
+        assertTrue(errors.isEmpty());
     }
 
 }

@@ -1,24 +1,29 @@
 package com.example.softwareg14.map.user;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.example.softwareg14.map.Error;
+
 public class UserRequest {
     public String email;
     public String name;
     public String username;
     public String password;
 
-    public boolean validate() {
+    public List<Error> validate() {
+        List<Error> errors = new ArrayList<>();
         if(email == null || email.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_EMAIL);
         }
         if(name == null || name.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_NAME);
         }
         if(username == null || username.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_USERNAME);
         }
         if(password == null || password.isEmpty()) {
-            return false;
+            errors.add(Error.MISSING_PASSWORD);
         }
-        return true;
+        return errors;
     }
 }
