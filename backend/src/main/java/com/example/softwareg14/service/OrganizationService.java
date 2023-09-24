@@ -14,14 +14,13 @@ import java.util.List;
 @Service
 public class OrganizationService {
     private final JdbcTemplate jdbcTemplate;
-    private static final String SALT = "sajdhakjss2131zzklap";
     @Autowired
     public OrganizationService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createOrganization(OrganizationRequest organizationRequest) {
-        //password = hashPassword(password); todo fix
+    public void createOrganization(OrganizationRequest organizationRequest) throws NoSuchAlgorithmException {
+        organizationRequest.password = HashService.hashPassword(organizationRequest.password);
         jdbcTemplate.update("INSERT INTO organization (name, description, address, website, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 organizationRequest.name, organizationRequest.description, organizationRequest.address, organizationRequest.website, organizationRequest.phone, organizationRequest.email, organizationRequest.password);
     }
@@ -35,7 +34,7 @@ public class OrganizationService {
     }
 
     public boolean validateOrganization(String email, String password) throws NoSuchAlgorithmException {
-        //password = hashPassword(password); todo fix
+        password = HashService.hashPassword(password);
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE email = ? AND password = ?", new Object[]{email, password}, Integer.class) > 0;
     }
 
@@ -75,17 +74,6 @@ public class OrganizationService {
             organization.setEmail(rs.getString("email"));
             return organization;
         }, id);
-    }
-
-    public String hashPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update((password + SALT).getBytes());
-        byte[] digest = md.digest();
-        StringBuilder sb = new StringBuilder();
-        for (byte b : digest) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
     }
 
 }
