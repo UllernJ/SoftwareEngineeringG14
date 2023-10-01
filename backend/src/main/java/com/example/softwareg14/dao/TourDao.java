@@ -19,6 +19,10 @@ public class TourDao implements Dao<Tour> {
 
     @Override
     public Tour getById(int id) {
+        return null;
+    }
+
+    public List<Tour> getToursByUserId(int id) {
         String query = "SELECT " +
                 "tour.id AS id, " +
                 "tour.name AS tour_name, " +
@@ -42,7 +46,7 @@ public class TourDao implements Dao<Tour> {
                 "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
                 "WHERE userHasTour.userId = ? " +
                 "GROUP BY tour.id";
-        return (Tour) jdbcTemplate.query(query, (rs, rowNum) -> {
+        return jdbcTemplate.query(query, (rs, rowNum) -> {
             Tour tour = new Tour();
             tour.setId(rs.getInt("id"));
             tour.setName(rs.getString("tour_name"));

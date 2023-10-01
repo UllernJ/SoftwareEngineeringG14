@@ -23,9 +23,13 @@ public class TourService {
         tourDao.delete(id);
     }
 
-    public List<Tour> getAllTours() {return tourDao.getAll();}
+    public List<Tour> getAllTours() {
+        return tourDao.getAll();
+    }
 
-    public List<Tour> getToursByUserId(int id) {return (List<Tour>) tourDao.getById(id);}
+    public List<Tour> getToursByUserId(int id) {
+        return tourDao.getToursByUserId(id);
+    }
 
     public boolean isUserInTour(int userId, int tourId) {
         return tourDao.isUserInTour(userId, tourId);
