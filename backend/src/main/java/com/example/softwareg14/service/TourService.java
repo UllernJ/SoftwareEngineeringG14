@@ -38,6 +38,11 @@ public class TourService {
     public void removeUserFromTour(int userId, int tourId) {
         tourDao.removeUserFromTour(userId, tourId);
     }
+
+    public void updateTour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
+        Tour tour = new Tour(name, description, durationHours, price, image, location,category , organization, maxCapacity, date);
+        tourDao.update(tour);
+    }
 }
 
 
