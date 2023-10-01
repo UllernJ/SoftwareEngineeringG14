@@ -68,5 +68,4 @@ public class UserDao implements Dao<User> {
     public boolean userExist(String username) {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user WHERE username = ?", new Object[]{username}, Integer.class) > 0;
     }
-
 }

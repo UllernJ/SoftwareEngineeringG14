@@ -1,5 +1,6 @@
 package com.example.softwareg14.map.tour;
 
+import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.Tour;
 import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.service.TourService;
@@ -69,10 +70,13 @@ public class TourMap {
             int price = tour.getPrice();
             String image = tour.getImage();
             String location = tour.getLocation();
-            int orgId = tour.getOrganization().getId();
+            String category = tour.getCategory();
+            Organization organization = tour.getOrganization();
             int maxCapacity = tour.getMaxCapacity();
             LocalDate date = tour.getDate();
-            tourService.createTour(name, description, durationHours, price, image, location, orgId, maxCapacity, date);
+
+            tourService.createTour(name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
+
             return ResponseEntity.ok("Tour created successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

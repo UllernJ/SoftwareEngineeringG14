@@ -38,12 +38,10 @@ public class UserService {
     public User getUserById(int id) {
         return userDao.getById(id);
     }
+
     public void deleteUserById(int id) {
         userDao.delete(id);
     }
 
-    public boolean userExist(String username) {
-        return userDao.userExist(username);
-    }
-
+    public boolean userExist(String username) {return userDao.userExist(username);}
 }

@@ -22,7 +22,6 @@ public class UserMap {
         this.userService = userService;
     }
 
-
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(Endpoint.USER_BY_ID)
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
@@ -64,5 +63,4 @@ public class UserMap {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
