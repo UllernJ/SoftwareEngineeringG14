@@ -1,5 +1,6 @@
 package com.example.softwareg14.map.tour;
 
+import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.Tour;
 import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.service.TourService;
@@ -41,12 +42,45 @@ public class TourMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.TOUR_UPDATE)
+    public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest){
+        try {
+            int id = tourRequest.id;
+            String name = tourRequest.name;
+            String description = tourRequest.description;
+            int durationHours = tourRequest.durationHours;
+            int price = tourRequest.price;
+            String image = tourRequest.image;
+            String location = tourRequest.location;
+            String category = tourRequest.category;
+            Organization organization = tourRequest.organization;
+            int maxCapacity = tourRequest.maxCapacity;
+            LocalDate date = tourRequest.date;
+            tourService.updateTour(id, name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
+
+            return ResponseEntity.ok("Tour updated successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.DELETE_TOUR)
+    public ResponseEntity<String> deleteTour(@RequestBody TourRequest tourRequest){
+        try {
+            tourService.deleteTourById(tourRequest.id);
+            return ResponseEntity.ok("Tour deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.ADD_USER_TO_TOUR)
     public ResponseEntity<String> addUserToTour(@RequestBody TourRequest tourRequest){
         try {
             int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
-
             boolean isUserInTour = tourService.isUserInTour(userId, tourId);
             if (isUserInTour) {
                 return ResponseEntity.badRequest().body("User is already attending the tour.");
@@ -69,10 +103,12 @@ public class TourMap {
             int price = tour.getPrice();
             String image = tour.getImage();
             String location = tour.getLocation();
-            int orgId = tour.getOrganization().getId();
+            String category = tour.getCategory();
+            Organization organization = tour.getOrganization();
             int maxCapacity = tour.getMaxCapacity();
             LocalDate date = tour.getDate();
-            tourService.createTour(name, description, durationHours, price, image, location, orgId, maxCapacity, date);
+            tourService.createTour(name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
+
             return ResponseEntity.ok("Tour created successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

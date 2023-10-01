@@ -21,8 +21,7 @@ public class Tour {
     private int maxCapacity;
     private LocalDate date;
 
-    public Tour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
-        this.id = id;
+    public Tour(String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
         this.name = name;
         this.description = description;
         this.durationHours = durationHours;
@@ -41,6 +40,8 @@ public class Tour {
     public Tour() {
 
     }
+
+
 
     //must be rewritten somwhere else.
 //    public void addAttendant(User user) {

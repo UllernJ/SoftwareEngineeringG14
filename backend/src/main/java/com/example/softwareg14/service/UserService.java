@@ -38,12 +38,18 @@ public class UserService {
     public User getUserById(int id) {
         return userDao.getById(id);
     }
+
     public void deleteUserById(int id) {
         userDao.delete(id);
     }
-
-    public boolean userExist(String username) {
-        return userDao.userExist(username);
+    public void updateUser(String name, String username, String password, String email) throws NoSuchAlgorithmException {
+        password = HashService.hashPassword(password);
+        User user = new User(name, username, password, email);
+        userDao.update(user);
+    }
+    public void deleteUser(int id) {
+        userDao.delete(id);
     }
 
+    public boolean userExist(String username) {return userDao.userExist(username);}
 }

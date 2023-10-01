@@ -13,6 +13,7 @@ public class OrganizationRequest {
     public String website;
     public String description;
     public String password;
+    public int id;
 
     public List<Error> validate() {
         List<Error> errors = new ArrayList<>();
