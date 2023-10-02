@@ -65,10 +65,10 @@ public class TourMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.DELETE_TOUR)
-    public ResponseEntity<String> deleteTour(@RequestBody TourRequest tourRequest){
+    @DeleteMapping(Endpoint.DELETE_TOUR)
+    public ResponseEntity<String> deleteTour(@PathVariable("id") int id){
         try {
-            tourService.deleteTourById(tourRequest.id);
+            tourService.deleteTourById(id);
             return ResponseEntity.ok("Tour deleted successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -110,6 +110,21 @@ public class TourMap {
             tourService.createTour(name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
 
             return ResponseEntity.ok("Tour created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.REMOVE_USER_FROM_TOUR)
+    public ResponseEntity<String> removeUserFromTour(@RequestBody TourRequest tourRequest){
+        try {
+            if (tourService.isUserInTour(tourRequest.userId, tourRequest.tourId)) {
+                tourService.removeUserFromTour(tourRequest.userId, tourRequest.tourId);
+                return ResponseEntity.ok("User removed from the tour successfully.");
+            } else {
+                return ResponseEntity.badRequest().body("User is not attending the tour.");
+            }
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

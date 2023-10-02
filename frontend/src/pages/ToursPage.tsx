@@ -11,7 +11,7 @@ export const ToursPage = () => {
     const user = getUser();
 
     useEffect(() => {
-        if (toursArr.length > 0) {
+        if (attendingTours.length > 0) {
             return;
         }
         TourService.getTours().then(res => {
@@ -23,7 +23,7 @@ export const ToursPage = () => {
                 setAttendingTours(res);
             });
         }
-    }, [user.id, toursArr.length]);
+    }, [user.id, attendingTours.length]);
 
     const isAttending = (tourId: number) => {
         return attendingTours.some(tour => tour.id === tourId);
@@ -32,13 +32,27 @@ export const ToursPage = () => {
     const addAttendee = (tourId: number) => {
         TourService.addAttendee(tourId).then(res => {
             if (res.status === 200) {
-                setToursArr([]);
+                setAttendingTours([]);
             }
         });
     }
 
     const removeAttendee = (tourId: number) => {
-        // Remove attendee
+        TourService.removeAttendingUser(tourId).then(res => {
+            if (res.status === 200) {
+                setAttendingTours([]);
+            }
+        });
+    }
+
+    const removeTour = (tourId: number) => {
+        if(user.role === "ADMIN") {
+            TourService.removeTour(tourId).then(res => {
+                if (res.status === 200) {
+                    setToursArr(toursArr.filter(tour => tour.id !== tourId));
+                }
+            });
+        }
     }
 
     return (
@@ -81,6 +95,14 @@ export const ToursPage = () => {
                                         </button>
                                     )}
                                     <Link to={"/organization/" + tour.organization.id} className="btn btn-primary">Organization</Link>
+                                    {user.role === "ADMIN" && (
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => removeTour(tour.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

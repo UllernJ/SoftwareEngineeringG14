@@ -16,11 +16,10 @@ public class Endpoint {
     public static final String TOUR_UPDATE = apiPath + "tour/update";
     public static final String TOURS_ALL = apiPath + "tour/all";
     public static final String CREATE_TOUR = apiPath + "tour/create";
-    public static final String DELETE_TOUR = apiPath + "tour/delete/{id}";
-    public static final String TOUR_REGISTER_ATTENDEE = apiPath + "tour/register";
-    public static final String TOUR_UNREGISTER_ATTENDEE = apiPath + "tour/unregister";
+    public static final String DELETE_TOUR = apiPath + "tour/{id}";
     public static final String TOUR_BY_ID = apiPath + "tour/{id}";
     public static final String TOURS_BY_ORGANIZATION_ID = apiPath + "tours/organization/{id}";
     public static final String TOURS_BY_USER_ID = apiPath + "tour/all/user/{id}";
     public static final String ADD_USER_TO_TOUR = apiPath + "tour/add/user";
+    public static final String REMOVE_USER_FROM_TOUR = apiPath + "tour/remove/user";
 }

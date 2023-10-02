@@ -1,5 +1,6 @@
 package com.example.softwareg14.dao;
 
+import com.example.softwareg14.entity.Role;
 import com.example.softwareg14.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,7 +33,7 @@ public class UserDao implements Dao<User> {
 
     @Override
     public void create(User user) {
-        jdbcTemplate.update("INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)", user.getName(), user.getUsername(), user.getPassword(), user.getEmail());
+        jdbcTemplate.update("INSERT INTO user (name, username, password, email, role) VALUES (?, ?, ?, ?, 'USER')", user.getName(), user.getUsername(), user.getPassword(), user.getEmail());
     }
 
     @Override
@@ -61,6 +62,7 @@ public class UserDao implements Dao<User> {
             user.setName(rs.getString("name"));
             user.setUsername(rs.getString("username"));
             user.setEmail(rs.getString("email"));
+            user.setRole(Role.valueOf(rs.getString("role")));
             return user;
         });
     }
