@@ -54,6 +54,22 @@ public class OrganizationMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.ORGANIZATION_DELETE)
+    public ResponseEntity<Organization> delete(@RequestBody OrganizationRequest organizationRequest) {
+        try {
+            if(organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
+                Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
+                organizationService.deleteOrganizationById(organization.getId());
+                return new ResponseEntity<>(organization, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(Endpoint.ORGANIZATIONS_ALL)
     public ResponseEntity<List<Organization>> getAllOrganizations() {
         try {
@@ -61,6 +77,17 @@ public class OrganizationMap {
             return new ResponseEntity<>(organizations, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.ORGANIZATION_UPDATE)
+    public ResponseEntity<String> updateOrganization(@RequestBody Organization organization) {
+        try {
+            organizationService.updateOrganization(organization);
+            return new ResponseEntity<>("Organization updated successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update organization", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

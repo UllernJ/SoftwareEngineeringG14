@@ -9,6 +9,7 @@ public class UserRequest {
     public String name;
     public String username;
     public String password;
+    public int id;
 
     public List<Error> validate() {
         List<Error> errors = new ArrayList<>();

@@ -33,7 +33,6 @@ public class UserMap {
         }
     }
 
-
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.USER_REGISTER)
     public ResponseEntity<String> register(@RequestBody UserRequest userRequest) {
@@ -46,6 +45,36 @@ public class UserMap {
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.USER_UPDATE)
+    public ResponseEntity<String> update(@RequestBody UserRequest userRequest) {
+        List<Error> errors = userRequest.validate();
+        if (!errors.isEmpty()) {
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+        }
+        try {
+            userService.updateUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);
+            return new ResponseEntity<>("User updated successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(Endpoint.USER_DELETE)
+    public ResponseEntity<String> delete(@RequestBody UserRequest userRequest) {
+        List<Error> errors = userRequest.validate();
+        if (!errors.isEmpty()) {
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+        }
+        try {
+            userService.deleteUser(userRequest.id);
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

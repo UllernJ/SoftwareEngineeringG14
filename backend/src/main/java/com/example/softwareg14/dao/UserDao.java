@@ -37,7 +37,7 @@ public class UserDao implements Dao<User> {
 
     @Override
     public void update(User user) {
-
+        jdbcTemplate.update("UPDATE user SET name = ?, username = ?, password = ?, email = ? WHERE id = ?", user.getName(), user.getUsername(), user.getPassword(), user.getEmail(), user.getId());
     }
 
     @Override
