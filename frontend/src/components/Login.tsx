@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {User} from "../types/global";
+import {Organization, User} from "../types/global";
 import {organizationLogin, userLogin} from "../service/LoginService";
 
 export const Login = () => {
@@ -11,17 +11,23 @@ export const Login = () => {
     const handleLogin = async (e: any) => {
         e.preventDefault()
         if (isOrganization) {
-            organizationLogin(email, password).then(res => {
-                if (res) {
-                    sessionStorage.setItem('organization', JSON.stringify(res))
+            organizationLogin(email, password).then(async res => {
+                if (res.status === 200) {
+                    const organization: Organization = await res.json()
+                    sessionStorage.setItem('organization', JSON.stringify(organization))
                     window.location.href = '/'
+                } else {
+                    console.error('Error logging in')
                 }
             })
         } else {
-            userLogin(username, password).then(res => {
-                if (res) {
-                    sessionStorage.setItem('user', JSON.stringify(res))
+            userLogin(username, password).then(async res => {
+                if (res.status === 200) {
+                    const user: User = await res.json()
+                    sessionStorage.setItem('user', JSON.stringify(user))
                     window.location.href = '/'
+                } else {
+                    console.error('Error logging in')
                 }
             })
         }
