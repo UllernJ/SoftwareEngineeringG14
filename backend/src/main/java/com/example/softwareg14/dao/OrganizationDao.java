@@ -1,19 +1,18 @@
 package com.example.softwareg14.dao;
 
 import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.Tour;
-import com.example.softwareg14.map.organization.OrganizationRequest;
 import com.example.softwareg14.service.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class OrganizationDao implements Dao<Organization> {
 
-    private List<Organization> organization;
+    private final List<Organization> organizations = new ArrayList<>();
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     public OrganizationDao(JdbcTemplate jdbcTemplate) {
@@ -23,14 +22,15 @@ public class OrganizationDao implements Dao<Organization> {
     @Override
     public Organization getById(int id) {
         return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE id = ?", (rs, rowNum) -> {
-            Organization organization = new Organization();
-            organization.setId(rs.getInt("id"));
-            organization.setName(rs.getString("name"));
-            organization.setDescription(rs.getString("description"));
-            organization.setAddress(rs.getString("address"));
-            organization.setWebsite(rs.getString("website"));
-            organization.setPhone(rs.getString("phone"));
-            organization.setEmail(rs.getString("email"));
+            Organization organization = Organization.builder()
+                    .id(rs.getInt("id"))
+                    .name(rs.getString("name"))
+                    .description(rs.getString("description"))
+                    .address(rs.getString("address"))
+                    .website(rs.getString("website"))
+                    .phone(rs.getString("phone"))
+                    .email(rs.getString("email"))
+                    .build();
             return organization;
         }, id);
     }
@@ -54,32 +54,40 @@ public class OrganizationDao implements Dao<Organization> {
 
     @Override
     public List<Organization> getAll() {
-        return jdbcTemplate.query("SELECT * FROM organization", (rs, rowNum) -> {
-            Organization organization = new Organization();
-            organization.setId(rs.getInt("id"));
-            organization.setName(rs.getString("name"));
-            organization.setDescription(rs.getString("description"));
-            organization.setAddress(rs.getString("address"));
-            organization.setWebsite(rs.getString("website"));
-            organization.setPhone(rs.getString("phone"));
-            organization.setEmail(rs.getString("email"));
+        jdbcTemplate.query("SELECT * FROM organization", (rs, rowNum) -> {
+            Organization organization = Organization.builder()
+                    .id(rs.getInt("id"))
+                    .name(rs.getString("name"))
+                    .description(rs.getString("description"))
+                    .address(rs.getString("address"))
+                    .website(rs.getString("website"))
+                    .phone(rs.getString("phone"))
+                    .email(rs.getString("email"))
+                    .build();
+            this.organizations.add(organization);
             return organization;
         });
+        return organizations;
     }
 
     public Organization getOrganizationByEmail(String email) {
         return jdbcTemplate.queryForObject("SELECT * FROM organization WHERE email = ?", new Object[]{email}, (rs, rowNum) -> {
-            Organization organization = new Organization();
-            organization.setId(rs.getInt("id"));
-            organization.setName(rs.getString("name"));
-            organization.setEmail(rs.getString("email"));
+            Organization organization = Organization.builder()
+                    .id(rs.getInt("id"))
+                    .name(rs.getString("name"))
+                    .description(rs.getString("description"))
+                    .address(rs.getString("address"))
+                    .website(rs.getString("website"))
+                    .phone(rs.getString("phone"))
+                    .email(rs.getString("email"))
+                    .build();
             return organization;
         });
     }
 
     public boolean validateOrganization(String email, String password) throws NoSuchAlgorithmException {
-        password = HashService.hashPassword(password);
-        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE email = ? AND password = ?", new Object[]{email, password}, Integer.class) > 0;
+        String hashedPassword = HashService.hashPassword(password);
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM organization WHERE email = ? AND password = ?", new Object[]{email, hashedPassword}, Integer.class) > 0;
     }
 
     public boolean organizationExists(String email) {

@@ -17,13 +17,11 @@ public class OrganizationService {
     @Autowired
     public OrganizationService(OrganizationDao organizationDao) { this.organizationDao = organizationDao; }
 
-    public void createOrganization(String name,String adresse,String phone,String website,String description, String password, String email) throws NoSuchAlgorithmException {
-        if (organizationExists(email)) {
+    public void createOrganization(Organization organization) throws NoSuchAlgorithmException {
+        if (organizationExists(organization.getEmail())) {
             throw new IllegalArgumentException("Organization already exists");
         }
-
-        password = HashService.hashPassword(password);
-        Organization organization = new Organization(name, adresse, phone , email, website, description, password);
+        organization.setPassword(HashService.hashPassword(organization.getPassword()));
         organizationDao.create(organization);
     }
 

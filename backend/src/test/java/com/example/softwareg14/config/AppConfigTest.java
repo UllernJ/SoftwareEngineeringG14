@@ -1,6 +1,8 @@
 package com.example.softwareg14.config;
 
+import com.example.softwareg14.dao.OrganizationDao;
 import com.example.softwareg14.dao.UserDao;
+import com.example.softwareg14.service.OrganizationService;
 import com.example.softwareg14.service.UserService;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,16 @@ public class AppConfigTest {
     @Bean
     public UserService userService() {
         return new UserService(userDao());
+    }
+
+    @Bean
+    public OrganizationDao organizationDao() {
+        return new OrganizationDao(jdbcTemplate());
+    }
+
+    @Bean
+    public OrganizationService organizationService() {
+        return new OrganizationService(organizationDao());
     }
 
 

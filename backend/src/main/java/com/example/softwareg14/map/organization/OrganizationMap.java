@@ -31,7 +31,16 @@ public class OrganizationMap {
             return new ResponseEntity(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
-            organizationService.createOrganization(organizationRequest.name, organizationRequest.address, organizationRequest.phone, organizationRequest.website, organizationRequest.description, organizationRequest.password, organizationRequest.email);
+            Organization organization = Organization.builder()
+                    .name(organizationRequest.name)
+                    .email(organizationRequest.email)
+                    .password(organizationRequest.password)
+                    .address(organizationRequest.address)
+                    .phone(organizationRequest.phone)
+                    .website(organizationRequest.website)
+                    .description(organizationRequest.description)
+                    .build();
+            organizationService.createOrganization(organization);
             return new ResponseEntity("Organization registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity("Failed to register organization", HttpStatus.INTERNAL_SERVER_ERROR);
