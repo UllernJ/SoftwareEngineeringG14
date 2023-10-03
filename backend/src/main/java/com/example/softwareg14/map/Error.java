@@ -18,4 +18,6 @@ public enum Error {
     MISSING_ID,
     MISSING_ADDRESS,
     MISSING_WEBSITE,
+    TOUR_IS_FULL,
+    USER_ALREADY_IN_TOUR
 }

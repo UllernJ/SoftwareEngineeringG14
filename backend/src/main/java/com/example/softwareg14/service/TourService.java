@@ -3,17 +3,21 @@ package com.example.softwareg14.service;
 import com.example.softwareg14.dao.TourDao;
 import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.Tour;
+import com.example.softwareg14.map.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TourService {
     private final TourDao tourDao;
     @Autowired
-    public TourService(TourDao tourDao) { this.tourDao = tourDao; }
+    public TourService(TourDao tourDao) {
+        this.tourDao = tourDao;
+    }
 
     public void createTour(String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
         Tour tour = new Tour(name, description, durationHours, price, image, location,category , organization, maxCapacity, date);
@@ -46,6 +50,18 @@ public class TourService {
     public void updateTour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
         Tour tour = new Tour(name, description, durationHours, price, image, location,category , organization, maxCapacity, date);
         tourDao.update(tour);
+    }
+
+    public List<Error> isPersonEligibleForTour(int userId, int tourId) {
+        List<Error> errors = new ArrayList<>();
+        Tour tour = tourDao.getById(tourId);
+        if(tour.getAttendingUsers() >= tour.getMaxCapacity()) {
+            errors.add(Error.TOUR_IS_FULL);
+        }
+        if(tourDao.isUserInTour(userId, tourId)) {
+            errors.add(Error.USER_ALREADY_IN_TOUR);
+        }
+        return errors;
     }
 }
 

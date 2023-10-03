@@ -19,7 +19,52 @@ public class TourDao implements Dao<Tour> {
 
     @Override
     public Tour getById(int id) {
-        return null;
+        String query = "SELECT " +
+                "tour.id AS id, " +
+                "tour.name AS tour_name, " +
+                "tour.description AS tour_description, " +
+                "tour.durationHours AS tour_durationHours, " +
+                "tour.price AS tour_price, " +
+                "tour.image AS tour_image, " +
+                "tour.location AS tour_location, " +
+                "tour.maxCapacity AS tour_maxCapacity, " +
+                "tour.date AS tour_date, " +
+                "organization.id AS org_id, " +
+                "organization.name AS org_name, " +
+                "organization.description AS org_description, " +
+                "organization.address AS org_address, " +
+                "organization.website AS org_website, " +
+                "organization.phone AS org_phone, " +
+                "organization.email AS org_email, " +
+                "count(userHasTour.userId) as attendingUsers " +
+                "FROM tour " +
+                "INNER JOIN organization ON tour.orgId = organization.id " +
+                "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
+                "WHERE tour.id = ? " +
+                "GROUP BY tour.id";
+        return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
+            Tour tour = new Tour();
+            tour.setId(rs.getInt("id"));
+            tour.setName(rs.getString("tour_name"));
+            tour.setDescription(rs.getString("tour_description"));
+            tour.setDurationHours(rs.getInt("tour_durationHours"));
+            tour.setPrice(rs.getInt("tour_price"));
+            tour.setImage(rs.getString("tour_image"));
+            tour.setLocation(rs.getString("tour_location"));
+            tour.setMaxCapacity(rs.getInt("tour_maxCapacity"));
+            tour.setDate(rs.getDate("tour_date").toLocalDate());
+            Organization organization = new Organization();
+            organization.setId(rs.getInt("org_id"));
+            organization.setName(rs.getString("org_name"));
+            organization.setDescription(rs.getString("org_description"));
+            organization.setAddress(rs.getString("org_address"));
+            organization.setWebsite(rs.getString("org_website"));
+            organization.setPhone(rs.getString("org_phone"));
+            organization.setEmail(rs.getString("org_email"));
+            tour.setOrganization(organization);
+            tour.setAttendingUsers(rs.getInt("attendingUsers"));
+            return tour;
+        }, id);
     }
 
     public List<Tour> getToursByUserId(int id) {

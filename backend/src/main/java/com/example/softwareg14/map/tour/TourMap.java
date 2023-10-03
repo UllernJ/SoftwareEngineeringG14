@@ -3,6 +3,7 @@ package com.example.softwareg14.map.tour;
 import com.example.softwareg14.entity.Organization;
 import com.example.softwareg14.entity.Tour;
 import com.example.softwareg14.map.Endpoint;
+import com.example.softwareg14.map.Error;
 import com.example.softwareg14.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -81,9 +82,9 @@ public class TourMap {
         try {
             int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
-            boolean isUserInTour = tourService.isUserInTour(userId, tourId);
-            if (isUserInTour) {
-                return ResponseEntity.badRequest().body("User is already attending the tour.");
+            List<Error> errors = tourService.isPersonEligibleForTour(userId, tourId);
+            if (!errors.isEmpty()) {
+                return ResponseEntity.badRequest().body(errors.toString());
             } else {
                 tourService.addUserToTour(userId, tourId);
                 return ResponseEntity.ok("User added to the tour successfully.");
