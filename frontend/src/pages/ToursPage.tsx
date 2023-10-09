@@ -12,7 +12,7 @@ export const ToursPage = () => {
     const user = getUser();
 
     useEffect(() => {
-        if(!isUserLoggedIn() || !isOrganizationLoggedIn()) {
+        if(!isUserLoggedIn() && !isOrganizationLoggedIn()) {
             window.location.href = "/";
         }
         if (toursArr.length > 0) {

@@ -43,6 +43,44 @@ export const Login = () => {
         }
     }, [])
 
+    const quickLogin = (isOrg: boolean = false) => {
+        if (!isOrg) {
+            userLogin("user", "user").then(async res => {
+                if (res.status === 200) {
+                    const user: User = await res.json()
+                    sessionStorage.setItem('user', JSON.stringify(user))
+                    window.location.href = '/'
+                } else {
+                    console.error('Error logging in')
+                }
+            })
+        } else {
+            const email = "test@test.test"
+            const password = "test"
+            organizationLogin(email, password).then(async res => {
+                if (res.status === 200) {
+                    const organization: Organization = await res.json()
+                    sessionStorage.setItem('organization', JSON.stringify(organization))
+                    window.location.href = '/'
+                } else {
+                    console.error('Error logging in')
+                }
+            })
+        }
+    }
+
+    const quickLoginAdmin = () => {
+        userLogin("test", "test").then(async res => {
+            if (res.status === 200) {
+                const user: User = await res.json()
+                sessionStorage.setItem('user', JSON.stringify(user))
+                window.location.href = '/'
+            } else {
+                console.error('Error logging in')
+            }
+        })
+    }
+
 
     return (
         <div className="container mt-5">
@@ -94,8 +132,15 @@ export const Login = () => {
                             </form>
                         </div>
                     </div>
+                    <div className="col-md-12">
+                        <h3>Quick login</h3>
+                        <p>For testing purposes</p>
+                        <button onClick={() => quickLogin} className="btn btn-primary m-2">Login as user</button>
+                        <button onClick={() => quickLogin(true)} className="btn btn-success m-2">Login as organization</button>
+                        <button onClick={quickLoginAdmin} className="btn btn-danger m-2">Login as admin</button>
+                    </div>
                 </div>
             </div>
         </div>
-)
+    )
 }
