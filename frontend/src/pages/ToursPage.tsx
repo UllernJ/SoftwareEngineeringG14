@@ -11,7 +11,7 @@ export const ToursPage = () => {
     const user = getUser();
 
     useEffect(() => {
-        if (attendingTours.length > 0) {
+        if (toursArr.length > 0) {
             return;
         }
         TourService.getTours().then(res => {
@@ -23,7 +23,7 @@ export const ToursPage = () => {
                 setAttendingTours(res);
             });
         }
-    }, [user.id, attendingTours.length]);
+    }, [user.id, toursArr.length]);
 
     const isAttending = (tourId: number) => {
         return attendingTours.some(tour => tour.id === tourId);
@@ -32,7 +32,7 @@ export const ToursPage = () => {
     const addAttendee = (tourId: number) => {
         TourService.addAttendee(tourId).then(res => {
             if (res.status === 200) {
-                setAttendingTours([]);
+                setToursArr([]);
             }
         });
     }
@@ -40,7 +40,7 @@ export const ToursPage = () => {
     const removeAttendee = (tourId: number) => {
         TourService.removeAttendingUser(tourId).then(res => {
             if (res.status === 200) {
-                setAttendingTours([]);
+                setToursArr([]);
             }
         });
     }
@@ -66,14 +66,14 @@ export const ToursPage = () => {
                                     <img src={tour.image} className="card-img-top" alt={tour.name} />
                                 </div>
                                 <div className="card-body">
-                                    <h5 className="card-title">{tour.name}</h5>
+                                    <Link to={"/tour/" + tour.id}><h5 className="card-title">{tour.name}</h5></Link>
                                     <p className="card-text">{tour.description}</p>
                                 </div>
                                 <ul className="list-group list-group-flush">
                                     <li className="list-group-item">Price: {tour.price} euro</li>
                                     <li className="list-group-item">Duration: {tour.durationHours} hours</li>
                                     <li className="list-group-item">Participants: {tour.attendingUsers}/{tour.maxCapacity}</li>
-                                    <li className="list-group-item">Date: {new Date(tour.date).toLocaleDateString()}</li>
+                                    <li className="list-group-item">Date: {tour.date}</li>
                                     <li className="list-group-item">Hosted by: {tour.organization.name}</li>
                                 </ul>
                                 <div className="card-footer d-flex justify-content-between">

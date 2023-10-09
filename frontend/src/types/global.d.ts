@@ -25,6 +25,6 @@ export type Tour = {
     image: string;
     organization: Organization;
     maxCapacity: number;
-    date: Date;
+    date: string;
     attendingUsers: number;
 }

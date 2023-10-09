@@ -77,4 +77,16 @@ export const TourService = {
             .then(response => response);
     },
 
+    getTourById: async (tourId: number): Promise<Tour> => {
+        const url: string = 'http://localhost:8080/api/tour/' + tourId;
+        const options: RequestInit = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        return fetch(url, options)
+            .then(response => response.json());
+    }
+
 }
