@@ -55,7 +55,7 @@ public class UserMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.USER_UPDATE)
+    @PutMapping(Endpoint.USER_UPDATE)
     public ResponseEntity<String> update(@RequestBody UserRequest userRequest) {
         List<Error> errors = userRequest.validate();
         if (!errors.isEmpty()) {
@@ -70,7 +70,7 @@ public class UserMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.USER_DELETE)
+    @DeleteMapping(Endpoint.USER_DELETE)
     public ResponseEntity<String> delete(@RequestBody UserRequest userRequest) {
         List<Error> errors = userRequest.validate();
         if (!errors.isEmpty()) {

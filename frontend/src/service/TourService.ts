@@ -91,7 +91,7 @@ export const TourService = {
     },
 
     updateTour: async (tour: TourEditRequest): Promise<Response> => {
-        const url: string = "http://localhost:8080/api/tour/update"
+        const url: string = "http://localhost:8080/api/tour/" + tour.id;
         const options: RequestInit = {
             method: 'PUT',
             headers: {

@@ -65,10 +65,10 @@ public class TourMap {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(Endpoint.TOUR_UPDATE)
-    public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest){
+    public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest, @PathVariable int id){
         try {
             Tour tour = Tour.builder()
-                            .id(tourRequest.id)
+                            .id(id)
                             .name(tourRequest.name)
                             .description(tourRequest.description)
                             .durationHours(tourRequest.durationHours)

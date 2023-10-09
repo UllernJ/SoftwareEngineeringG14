@@ -63,8 +63,8 @@ public class OrganizationMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.ORGANIZATION_DELETE)
-    public ResponseEntity<Organization> delete(@RequestBody OrganizationRequest organizationRequest) {
+    @DeleteMapping(Endpoint.ORGANIZATION_DELETE)
+    public ResponseEntity<Organization> delete(@RequestBody OrganizationRequest organizationRequest, @PathVariable("id") int id) {
         try {
             if(organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
                 Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
@@ -90,8 +90,8 @@ public class OrganizationMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.ORGANIZATION_UPDATE)
-    public ResponseEntity<String> updateOrganization(@RequestBody Organization organization) {
+    @PutMapping(Endpoint.ORGANIZATION_UPDATE)
+    public ResponseEntity<String> updateOrganization(@RequestBody Organization organization, @PathVariable("id") int id) {
         try {
             organizationService.updateOrganization(organization);
             return new ResponseEntity<>("Organization updated successfully", HttpStatus.OK);
