@@ -105,7 +105,9 @@ public class TourDao implements Dao<Tour> {
             tour.setImage(rs.getString("tour_image"));
             tour.setLocation(rs.getString("tour_location"));
             tour.setMaxCapacity(rs.getInt("tour_maxCapacity"));
-            tour.setDate(rs.getDate("tour_date").toLocalDate());
+            tour.setAttendingUsers(rs.getInt("attendingUsers"));
+            tour.setDate(null);
+
             Organization organization = new Organization();
             organization.setId(rs.getInt("org_id"));
             organization.setName(rs.getString("org_name"));
@@ -114,8 +116,8 @@ public class TourDao implements Dao<Tour> {
             organization.setWebsite(rs.getString("org_website"));
             organization.setPhone(rs.getString("org_phone"));
             organization.setEmail(rs.getString("org_email"));
+
             tour.setOrganization(organization);
-            tour.setAttendingUsers(rs.getInt("attendingUsers"));
             return tour;
         }, id);
     }

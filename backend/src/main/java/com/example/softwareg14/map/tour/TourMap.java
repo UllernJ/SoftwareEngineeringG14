@@ -54,7 +54,7 @@ public class TourMap {
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(Endpoint.TOUR_BY_ID)
-    public ResponseEntity<Tour> getToursById(@PathVariable("id") int id) {
+    public ResponseEntity<Tour> getTourById(@PathVariable("id") int id) {
         try {
          Tour tour = tourService.getTourById(id);
             return new ResponseEntity<>(tour, HttpStatus.OK);
