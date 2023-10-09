@@ -1,9 +1,11 @@
 import {Link} from "react-router-dom";
 import {isUserLoggedIn} from "../../service/UserService";
+import {isOrganizationLoggedIn} from "../../service/OrganizationService";
 
 export const NavigationBar = () => {
 
     const handleLogout = () => {
+        sessionStorage.removeItem('organization');
         sessionStorage.removeItem('user');
         window.location.reload();
     }
@@ -17,7 +19,7 @@ export const NavigationBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/tours">Tours</Link>
                         </li>
-                        {!isUserLoggedIn() ? (
+                        {!isUserLoggedIn() && !isOrganizationLoggedIn() ? (
                             <>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/register/user">Register</Link>

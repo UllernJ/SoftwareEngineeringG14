@@ -27,4 +27,5 @@ export type Tour = {
     maxCapacity: number;
     date: string;
     attendingUsers: number;
+    location: string;
 }

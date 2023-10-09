@@ -3,6 +3,7 @@ import { Tour } from "../types/global";
 import { useEffect, useState } from "react";
 import { getUser, isUserLoggedIn } from "../service/UserService";
 import { Link } from "react-router-dom";
+import {getOrganizationId, isOrganizationLoggedIn} from "../service/OrganizationService";
 
 export const ToursPage = () => {
     const [toursArr, setToursArr] = useState<Tour[]>([]);
@@ -94,6 +95,10 @@ export const ToursPage = () => {
                                             Attend
                                         </button>
                                     )}
+                                    {isOrganizationLoggedIn() && getOrganizationId() === tour.organization.id && (
+                                        <Link to={"/tour/" + tour.id + "/edit"} className="btn btn-primary">Edit</Link>
+                                    )}
+
                                     <Link to={"/organization/" + tour.organization.id} className="btn btn-primary">Organization</Link>
                                     {user.role === "ADMIN" && (
                                         <button

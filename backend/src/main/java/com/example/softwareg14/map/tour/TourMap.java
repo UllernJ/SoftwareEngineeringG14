@@ -64,21 +64,22 @@ public class TourMap {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(Endpoint.TOUR_UPDATE)
+    @PutMapping(Endpoint.TOUR_UPDATE)
     public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest){
         try {
-            int id = tourRequest.id;
-            String name = tourRequest.name;
-            String description = tourRequest.description;
-            int durationHours = tourRequest.durationHours;
-            int price = tourRequest.price;
-            String image = tourRequest.image;
-            String location = tourRequest.location;
-            String category = tourRequest.category;
-            Organization organization = tourRequest.organization;
-            int maxCapacity = tourRequest.maxCapacity;
-            LocalDate date = tourRequest.date;
-            tourService.updateTour(id, name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
+            Tour tour = Tour.builder()
+                            .id(tourRequest.id)
+                            .name(tourRequest.name)
+                            .description(tourRequest.description)
+                            .durationHours(tourRequest.durationHours)
+                            .price(tourRequest.price)
+                            .image(tourRequest.image)
+                            .date(tourRequest.date)
+                            .location(tourRequest.location)
+                            .category(tourRequest.category)
+                                    .build();
+
+            tourService.updateTour(tour);
 
             return ResponseEntity.ok("Tour updated successfully.");
         } catch (Exception e) {
@@ -101,7 +102,7 @@ public class TourMap {
     @PostMapping(Endpoint.ADD_USER_TO_TOUR)
     public ResponseEntity<String> addUserToTour(@RequestBody TourRequest tourRequest){
         try {
-            int userId = tourRequest.userId;
+             int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
             List<Error> errors = tourService.isPersonEligibleForTour(userId, tourId);
             if (!errors.isEmpty()) {

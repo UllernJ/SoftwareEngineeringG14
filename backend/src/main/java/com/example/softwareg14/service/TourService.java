@@ -55,20 +55,7 @@ public class TourService {
         tourDao.removeUserFromTour(userId, tourId);
     }
 
-    public void updateTour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
-        Tour tour = Tour.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .durationHours(durationHours)
-                .price(price)
-                .image(image)
-                .location(location)
-                .category(category)
-                .organization(organization)
-                .maxCapacity(maxCapacity)
-                .date(date)
-                .build();
+    public void updateTour(Tour tour) {
         tourDao.update(tour);
     }
 

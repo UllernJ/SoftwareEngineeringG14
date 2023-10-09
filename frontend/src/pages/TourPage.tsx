@@ -23,7 +23,10 @@ export const TourPage = () => {
                     {tour ? (
                         <>
                             <h2 className="card-title">{tour.name}</h2>
-                            <p className="card-text">{tour.description}</p>
+                            <div style={{ height: '250px', width: '50%', overflow: 'hidden' }}>
+                                <img src={tour.image} className="card-img-top" alt={tour.name} />
+                            </div>
+                            <p className="card-text"><strong>Description: </strong>{tour.description}</p>
                             <address className="mb-3">
                                 <strong>Address:</strong> {tour.organization.address}
                             </address>

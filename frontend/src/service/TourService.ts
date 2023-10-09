@@ -1,5 +1,6 @@
 import {Tour} from "../types/global";
 import {getUser} from "./UserService";
+import {TourEditRequest} from "../pages/TourEditPage";
 
 export const TourService = {
     getTours: async (): Promise<Tour[]> => {
@@ -87,6 +88,18 @@ export const TourService = {
         }
         return fetch(url, options)
             .then(response => response.json());
-    }
+    },
 
+    updateTour: async (tour: TourEditRequest): Promise<Response> => {
+        const url: string = "http://localhost:8080/api/tour/update"
+        const options: RequestInit = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tour)
+        }
+        return fetch(url, options)
+            .then(response => response);
+    }
 }

@@ -179,8 +179,8 @@ public class TourDao implements Dao<Tour> {
     }
     @Override
     public void update(Tour tour) {
-        jdbcTemplate.update("UPDATE tour SET name = ?, description = ?, durationHours = ?, price = ?, image = ?, location = ?, maxCapacity = ?, date = ?, orgId = ? WHERE id = ?",
-                tour.getName(), tour.getDescription(), tour.getDurationHours(), tour.getPrice(), tour.getImage(), tour.getLocation(), tour.getMaxCapacity(), tour.getDate(), tour.getOrganization(), tour.getId());
+        jdbcTemplate.update("UPDATE tour SET name = ?, description = ?, durationHours = ?, price = ?, image = ?, location = ?, maxCapacity = ?, date = ? WHERE id = ?",
+                tour.getName(), tour.getDescription(), tour.getDurationHours(), tour.getPrice(), tour.getImage(), tour.getLocation(), tour.getMaxCapacity(), tour.getDate(), tour.getId());
     }
 
     @Override

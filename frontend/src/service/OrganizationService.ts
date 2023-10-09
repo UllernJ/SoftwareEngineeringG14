@@ -7,3 +7,12 @@ export const getOrganization = async (id: number): Promise<Organization> => {
     return organization;
 }
 
+export const isOrganizationLoggedIn = (): boolean => {
+    return !!sessionStorage.getItem('organization');
+}
+
+export const getOrganizationId = (): number => {
+    return JSON.parse(sessionStorage.getItem('organization')!).id;
+}
+
+
