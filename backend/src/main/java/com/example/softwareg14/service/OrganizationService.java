@@ -56,4 +56,14 @@ public class OrganizationService {
         }, id);
     }
 
+<<<<<<< Updated upstream
+=======
+
+
+    public boolean organizationExists(String email) {
+        return organizationDao.organizationExists(email);
+    }
+
+
+>>>>>>> Stashed changes
 }
