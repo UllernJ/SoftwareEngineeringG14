@@ -7,7 +7,6 @@ import com.example.softwareg14.map.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,9 @@ public class TourService {
         return tourDao.getToursByOrganizationId(id);
     }
 
-    public Tour getToursById(int id) { return tourDao.getById(id); }
+    public Tour getTourById(int id) {
+        return tourDao.getById(id);
+    }
 
     public List<Tour> getAllTours() {
         return tourDao.getAll();
@@ -42,9 +43,6 @@ public class TourService {
         return tourDao.getToursByUserId(id);
     }
 
-    public boolean validateTour(int id, String name) {
-        return tourDao.validateTour(id, name);
-    }
     public boolean isUserInTour(int userId, int tourId) {
         return tourDao.isUserInTour(userId, tourId);
     }

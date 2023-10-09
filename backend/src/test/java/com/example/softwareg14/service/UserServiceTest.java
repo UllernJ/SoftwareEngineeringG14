@@ -51,7 +51,7 @@ public class UserServiceTest {
     @Test
     public void testUserShouldBeValid() throws NoSuchAlgorithmException {
         String username = user.getUsername();
-        String password = user.getPassword();
+        String password = "test4";
         assertTrue(userService.validateUser(username, password));
     }
 

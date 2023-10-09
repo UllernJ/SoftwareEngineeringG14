@@ -173,13 +173,7 @@ public class TourDao implements Dao<Tour> {
 
     @Override
     public void create(Tour tour) {
-        jdbcTemplate.update("INSERT INTO tour (name, description, durationHours, price, image, location, maxCapacity, date, orgId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", tour.getName(), tour.getDescription(), tour.getDurationHours(), tour.getPrice(), tour.getImage(), tour.getLocation(), tour.getMaxCapacity(), tour.getDate(), tour.getOrganization());
-    }
-
-    public boolean validateTour(int id, String name) {
-        String query = "SELECT COUNT(*) FROM tour WHERE id = ? AND name = ?";
-        int count = jdbcTemplate.queryForObject(query, Integer.class, id, name);
-        return count > 0;
+        jdbcTemplate.update("INSERT INTO tour (name, description, durationHours, price, image, location, maxCapacity, date, orgId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", tour.getName(), tour.getDescription(), tour.getDurationHours(), tour.getPrice(), tour.getImage(), tour.getLocation(), tour.getMaxCapacity(), tour.getDate(), tour.getOrganization().getId());
     }
     @Override
     public void update(Tour tour) {

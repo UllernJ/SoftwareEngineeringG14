@@ -56,7 +56,7 @@ public class TourMap {
     @GetMapping(Endpoint.TOUR_BY_ID)
     public ResponseEntity<Tour> getToursById(@PathVariable("id") int id) {
         try {
-         Tour tour = tourService.getToursById(id);
+         Tour tour = tourService.getTourById(id);
             return new ResponseEntity<>(tour, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
