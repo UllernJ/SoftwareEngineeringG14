@@ -18,7 +18,7 @@ public class UserService {
     }
 
     public void createUser(User user) throws NoSuchAlgorithmException {
-        if (userDao.userExist(user.getUsername())) {
+        if (userExist(user.getUsername())) {
             throw new IllegalArgumentException("User already exists");
         }
         user.setPassword(HashService.hashPassword(user.getPassword()));
@@ -26,8 +26,8 @@ public class UserService {
     }
 
     public boolean validateUser(String username, String password) throws NoSuchAlgorithmException {
-        password = HashService.hashPassword(password);
-        return userDao.validateUser(username, password);
+        String hashedPassword = HashService.hashPassword(password);
+        return userDao.validateUser(username, hashedPassword);
     }
 
     public User getUserByUsername(String username) {
@@ -39,21 +39,29 @@ public class UserService {
     }
 
     public void deleteUserById(int id) {
+        if(getUserById(id) == null) {
+            throw new IllegalArgumentException("User does not exist");
+        }
         userDao.delete(id);
     }
-    public void updateUser(String name, String username, String password, String email) throws NoSuchAlgorithmException {
-        password = HashService.hashPassword(password);
-        User user = User.builder()
-                .name(name)
-                .username(username)
-                .password(password)
-                .email(email)
-                .build();
+
+    public void updateUser(User user) throws NoSuchAlgorithmException {
+        if(!userExist(user.getUsername())) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+        if(user.getId() == null) {
+            int id = userDao.getUserByUsername(user.getUsername()).getId();
+            user.setId(id);
+        }
+        user.setPassword(HashService.hashPassword(user.getPassword()));
         userDao.update(user);
     }
+
     public void deleteUser(int id) {
         userDao.delete(id);
     }
 
-    public boolean userExist(String username) {return userDao.userExist(username);}
+    public boolean userExist(String username) {
+        return userDao.userExist(username);
+    }
 }

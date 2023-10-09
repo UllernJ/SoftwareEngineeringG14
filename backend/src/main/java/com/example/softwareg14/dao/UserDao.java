@@ -21,14 +21,17 @@ public class UserDao implements Dao<User> {
 
     @Override
     public User getById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM user WHERE id = ?", new Object[]{id}, (rs, rowNum) -> {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setName(rs.getString("name"));
-            user.setUsername(rs.getString("username"));
-            user.setEmail(rs.getString("email"));
+        return jdbcTemplate.queryForObject("SELECT * FROM user WHERE id = ?", (rs, rowNum) -> {
+            User user = User.builder()
+                    .id(rs.getInt("id"))
+                    .name(rs.getString("name"))
+                    .username(rs.getString("username"))
+                    .password(rs.getString("password"))
+                    .email(rs.getString("email"))
+                    .role(Role.valueOf(rs.getString("role")))
+                    .build();
             return user;
-        });
+        }, id);
     }
 
     @Override

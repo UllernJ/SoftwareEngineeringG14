@@ -3,6 +3,7 @@ package com.example.softwareg14.service;
 import com.example.softwareg14.config.AppConfigTest;
 import com.example.softwareg14.entity.User;
 import org.junit.jupiter.api.*;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 
 import java.security.NoSuchAlgorithmException;
@@ -67,6 +68,45 @@ public class UserServiceTest {
         assertEquals(user.getUsername(), userFromDb.getUsername());
         assertEquals(user.getName(), userFromDb.getName());
         assertEquals(user.getEmail(), userFromDb.getEmail());
+    }
+
+    @Test
+    public void testUserShouldNotWorkIfDoesntExist() {
+        User user = User.builder()
+                .username("test1234ik12j4io1jdisadasioasdadasdasdasva")
+                .name("test2")
+                .email("test3")
+                .password("test4")
+                .build();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.updateUser(user);
+        });
+    }
+
+    @Test
+    public void testUpdateUserShouldWorkIfExist() throws NoSuchAlgorithmException {
+        String oldName = user.getName();
+        user.setName("NEW NAME");
+        userService.updateUser(user);
+        User userFromDb = userService.getUserByUsername(user.getUsername());
+
+        assertNotEquals(oldName, userFromDb.getName());
+        assertEquals(user.getName(), userFromDb.getName());
+    }
+
+    @Test
+    public void testIfUserIdIsNullItWillBeFetched() throws NoSuchAlgorithmException {
+        user.setId(null);
+        userService.updateUser(user);
+        assertNotNull(user.getId());
+    }
+
+    @Test
+    public void testDeleteUserByIdShouldThrowExceptionIfUserDoesNotExist() {
+        assertThrows(EmptyResultDataAccessException.class, () -> {
+            userService.deleteUserById(123123);
+        });
     }
 
     @AfterAll

@@ -24,11 +24,15 @@ public class OrganizationService {
     }
 
     public void deleteOrganizationById(int id) {
-        organizationDao.delete(id);
+        if(getOrganizationById(id) != null) {
+            organizationDao.delete(id);
+        }
     }
 
     public void updateOrganization(Organization organization) {
-        organizationDao.update(organization);
+        if(getOrganizationById(organization.getId()) != null) {
+            organizationDao.update(organization);
+        }
     }
 
     public boolean validateOrganization(String email, String password) throws NoSuchAlgorithmException {
@@ -44,7 +48,11 @@ public class OrganizationService {
     }
 
     public Organization getOrganizationById(int id) {
-        return organizationDao.getById(id);
+        Organization org = organizationDao.getById(id);
+        if(org == null) {
+            throw new IllegalArgumentException("Organization does not exist");
+        }
+        return org;
     }
 
     public boolean organizationExists(String email) {

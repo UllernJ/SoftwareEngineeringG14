@@ -81,6 +81,44 @@ class OrganizationServiceTest {
         assertTrue(organizationService.organizationExists(organizationFromDb.getEmail()));
     }
 
+    @Test
+    public void testUpdateNonExistingOrganization() {
+        Organization nonExistingOrganization = Organization.builder()
+                .id(696423439)
+                .name("nonExisting")
+                .address("NonExisting")
+                .build();
+
+        assertThrows(RuntimeException.class, () -> {
+            organizationService.updateOrganization(nonExistingOrganization);
+        });
+    }
+
+    @Test
+    public void testGetOrganizationByNonExistentId() {
+        assertThrows(RuntimeException.class, () -> {
+            organizationService.getOrganizationById(4121241);
+        });
+    }
+
+    @Test
+    public void testValidateOrganizationWithWrongEmail() throws NoSuchAlgorithmException {
+        assertFalse(organizationService.validateOrganization("wrongEmailAdress@test.com",
+                organization.getPassword()));
+    }
+
+    @Test
+    public void testValidateOrganizationWithWrongPassword() throws NoSuchAlgorithmException {
+        assertFalse(organizationService.validateOrganization(organization.getEmail(), "wrongPassword"));
+    }
+
+    @Test
+    public void testDeleteOrganizationByNonExistentId() {
+        assertThrows(RuntimeException.class, () -> {
+            organizationService.deleteOrganizationById(124312412);  // An arbitrary non-existent ID
+        });
+    }
+
     @AfterAll
     public void tearDown() {
         organizationService.deleteOrganizationById(organizationFromDb.getId());

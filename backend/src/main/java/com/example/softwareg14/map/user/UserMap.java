@@ -62,7 +62,13 @@ public class UserMap {
             return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
-            userService.updateUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);
+            User user = User.builder()
+                    .name(userRequest.name)
+                    .username(userRequest.username)
+                    .password(userRequest.password)
+                    .email(userRequest.email)
+                    .build();
+            userService.updateUser(user);
             return new ResponseEntity<>("User updated successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update user", HttpStatus.INTERNAL_SERVER_ERROR);
