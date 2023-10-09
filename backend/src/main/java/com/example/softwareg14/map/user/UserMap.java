@@ -41,7 +41,13 @@ public class UserMap {
             return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
-            userService.createUser(userRequest.name, userRequest.username, userRequest.password, userRequest.email);
+            User user = User.builder()
+                    .name(userRequest.name)
+                    .username(userRequest.username)
+                    .password(userRequest.password)
+                    .email(userRequest.email)
+                    .build();
+            userService.createUser(user);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);

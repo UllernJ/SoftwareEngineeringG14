@@ -18,8 +18,13 @@ public class UserServiceTest {
 
     @BeforeAll
     public void setUp() throws NoSuchAlgorithmException {
-        user = new User("test1234", "test1234", "test", "test");
-        userService.createUser(user.getName(), user.getUsername(), user.getPassword(), user.getEmail());
+        user = User.builder()
+                .username("test1")
+                .name("test2")
+                .email("test3")
+                .password("test4")
+                .build();
+        userService.createUser(user);
         userFromDb = userService.getUserByUsername(user.getUsername());
         assertEquals(user.getUsername(), userFromDb.getUsername());
     }
@@ -27,7 +32,7 @@ public class UserServiceTest {
     @Test
     public void testCreatingAUserThatAlreadyExistShouldThrowException() throws NoSuchAlgorithmException {
         assertThrows(IllegalArgumentException.class, () -> {
-            userService.createUser(user.getName(), user.getUsername(), user.getPassword(), user.getEmail());
+            userService.createUser(user);
         });
     }
 

@@ -2,8 +2,6 @@ package com.example.softwareg14.service;
 
 import com.example.softwareg14.dao.OrganizationDao;
 import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.User;
-import com.example.softwareg14.map.organization.OrganizationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +46,6 @@ public class OrganizationService {
     public Organization getOrganizationById(int id) {
         return organizationDao.getById(id);
     }
-
-
 
     public boolean organizationExists(String email) {
         return organizationDao.organizationExists(email);

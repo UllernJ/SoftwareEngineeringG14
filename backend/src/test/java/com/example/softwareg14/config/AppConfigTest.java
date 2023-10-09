@@ -1,8 +1,10 @@
 package com.example.softwareg14.config;
 
 import com.example.softwareg14.dao.OrganizationDao;
+import com.example.softwareg14.dao.TourDao;
 import com.example.softwareg14.dao.UserDao;
 import com.example.softwareg14.service.OrganizationService;
+import com.example.softwareg14.service.TourService;
 import com.example.softwareg14.service.UserService;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +47,13 @@ public class AppConfigTest {
         return new OrganizationService(organizationDao());
     }
 
+    @Bean
+    public TourDao tourDao() {
+        return new TourDao(jdbcTemplate());
+    }
 
-
+    @Bean
+    public TourService tourService() {
+        return new TourService(tourDao());
+    }
 }

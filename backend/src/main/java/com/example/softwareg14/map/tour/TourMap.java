@@ -6,6 +6,7 @@ import com.example.softwareg14.map.Endpoint;
 import com.example.softwareg14.map.Error;
 import com.example.softwareg14.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,26 @@ public class TourMap {
             return ResponseEntity.ok(tours);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
+        }
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(Endpoint.TOURS_BY_ORGANIZATION_ID)
+    public ResponseEntity<List<Tour>> getToursByOrganizationId(@PathVariable("id") int id) {
+        try {
+            List<Tour> tours = tourService.getToursbyOrganizationId(id);
+            return ResponseEntity.ok(tours);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(Endpoint.TOUR_BY_ID)
+    public ResponseEntity<Tour> getToursById(@PathVariable("id") int id) {
+        try {
+         Tour tour = tourService.getToursById(id);
+            return new ResponseEntity<>(tour, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -96,20 +117,21 @@ public class TourMap {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.CREATE_TOUR)
-    public ResponseEntity<String> createTour(@RequestBody Tour tour) {
+    public ResponseEntity<String> createTour(@RequestBody TourRequest tourRequest) {
         try {
-            String name = tour.getName();
-            String description = tour.getDescription();
-            int durationHours = tour.getDurationHours();
-            int price = tour.getPrice();
-            String image = tour.getImage();
-            String location = tour.getLocation();
-            String category = tour.getCategory();
-            Organization organization = tour.getOrganization();
-            int maxCapacity = tour.getMaxCapacity();
-            LocalDate date = tour.getDate();
-            tourService.createTour(name, description, durationHours, price, image, location, category, organization, maxCapacity, date);
-
+            Tour tour = Tour.builder()
+                    .name(tourRequest.name)
+                    .description(tourRequest.description)
+                    .durationHours(tourRequest.durationHours)
+                    .price(tourRequest.price)
+                    .image(tourRequest.image)
+                    .location(tourRequest.location)
+                    .category(tourRequest.category)
+                    .organization(tourRequest.organization)
+                    .maxCapacity(tourRequest.maxCapacity)
+                    .date(tourRequest.date)
+                    .build();
+                    tourService.createTour(tour);
             return ResponseEntity.ok("Tour created successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

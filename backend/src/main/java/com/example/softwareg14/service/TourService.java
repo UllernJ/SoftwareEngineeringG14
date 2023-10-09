@@ -7,6 +7,7 @@ import com.example.softwareg14.map.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,19 @@ public class TourService {
         this.tourDao = tourDao;
     }
 
-    public void createTour(String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
-        Tour tour = new Tour(name, description, durationHours, price, image, location,category , organization, maxCapacity, date);
+    public void createTour(Tour tour) {
         tourDao.create(tour);
     }
+
     public void deleteTourById(int id) {
         tourDao.delete(id);
     }
+
+    public List<Tour> getToursbyOrganizationId(int id) {
+        return tourDao.getToursByOrganizationId(id);
+    }
+
+    public Tour getToursById(int id) { return tourDao.getById(id); }
 
     public List<Tour> getAllTours() {
         return tourDao.getAll();
@@ -35,6 +42,9 @@ public class TourService {
         return tourDao.getToursByUserId(id);
     }
 
+    public boolean validateTour(int id, String name) {
+        return tourDao.validateTour(id, name);
+    }
     public boolean isUserInTour(int userId, int tourId) {
         return tourDao.isUserInTour(userId, tourId);
     }
@@ -48,7 +58,19 @@ public class TourService {
     }
 
     public void updateTour(int id, String name, String description, int durationHours, int price, String image, String location, String category, Organization organization, int maxCapacity, LocalDate date) {
-        Tour tour = new Tour(name, description, durationHours, price, image, location,category , organization, maxCapacity, date);
+        Tour tour = Tour.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .durationHours(durationHours)
+                .price(price)
+                .image(image)
+                .location(location)
+                .category(category)
+                .organization(organization)
+                .maxCapacity(maxCapacity)
+                .date(date)
+                .build();
         tourDao.update(tour);
     }
 

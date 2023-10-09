@@ -17,12 +17,11 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public void createUser(String name, String username, String password, String email) throws NoSuchAlgorithmException {
-        if(userExist(username)) {
-            throw new IllegalArgumentException("User already exists"); //this should be handled before coming to this function.
+    public void createUser(User user) throws NoSuchAlgorithmException {
+        if (userDao.userExist(user.getUsername())) {
+            throw new IllegalArgumentException("User already exists");
         }
-        password = HashService.hashPassword(password);
-        User user = new User(name, username, password, email);
+        user.setPassword(HashService.hashPassword(user.getPassword()));
         userDao.create(user);
     }
 
@@ -44,7 +43,12 @@ public class UserService {
     }
     public void updateUser(String name, String username, String password, String email) throws NoSuchAlgorithmException {
         password = HashService.hashPassword(password);
-        User user = new User(name, username, password, email);
+        User user = User.builder()
+                .name(name)
+                .username(username)
+                .password(password)
+                .email(email)
+                .build();
         userDao.update(user);
     }
     public void deleteUser(int id) {
