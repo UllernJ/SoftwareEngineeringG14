@@ -12,6 +12,9 @@ export const ToursPage = () => {
     const user = getUser();
 
     useEffect(() => {
+        if(!isUserLoggedIn() || !isOrganizationLoggedIn()) {
+            window.location.href = "/";
+        }
         if (toursArr.length > 0) {
             return;
         }
@@ -78,22 +81,26 @@ export const ToursPage = () => {
                                     <li className="list-group-item">Hosted by: {tour.organization.name}</li>
                                 </ul>
                                 <div className="card-footer d-flex justify-content-between">
-                                    {isUserLoggedIn() && isAttending(tour.id) ? (
-                                        <button
-                                            className={`btn btn-primary ${hoveredTourId === tour.id ? 'custom-hover' : ''}`}
-                                            onClick={() => removeAttendee(tour.id)}
-                                            onMouseEnter={() => setHoveredTourId(tour.id)} // Set the currently hovered tour
-                                            onMouseLeave={() => setHoveredTourId(null)} // Reset when mouse leaves
-                                        >
-                                            {hoveredTourId === tour.id ? 'Remove' : 'Attending'}
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => addAttendee(tour.id)}
-                                        >
-                                            Attend
-                                        </button>
+                                    {!isOrganizationLoggedIn() && (
+                                        <>
+                                        {isUserLoggedIn() && isAttending(tour.id) ? (
+                                            <button
+                                                className={`btn btn-primary ${hoveredTourId === tour.id ? 'custom-hover' : ''}`}
+                                                onClick={() => removeAttendee(tour.id)}
+                                                onMouseEnter={() => setHoveredTourId(tour.id)} // Set the currently hovered tour
+                                                onMouseLeave={() => setHoveredTourId(null)} // Reset when mouse leaves
+                                            >
+                                                {hoveredTourId === tour.id ? 'Remove' : 'Attending'}
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => addAttendee(tour.id)}
+                                            >
+                                                Attend
+                                            </button>
+                                        )}
+                                        </>
                                     )}
                                     {isOrganizationLoggedIn() && getOrganizationId() === tour.organization.id && (
                                         <Link to={"/tour/" + tour.id + "/edit"} className="btn btn-primary">Edit</Link>

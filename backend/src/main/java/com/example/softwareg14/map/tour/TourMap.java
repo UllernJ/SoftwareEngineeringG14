@@ -74,6 +74,7 @@ public class TourMap {
                             .durationHours(tourRequest.durationHours)
                             .price(tourRequest.price)
                             .image(tourRequest.image)
+                            .maxCapacity(tourRequest.maxCapacity)
                             .date(tourRequest.date)
                             .location(tourRequest.location)
                             .category(tourRequest.category)
