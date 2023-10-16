@@ -21,7 +21,7 @@ public class TourDao implements Dao<Tour> {
 
     public List<Tour> getToursByOrganizationId(int id) {
         String query = "SELECT " +
-                "tour.id AS id, " +
+                "tour.id AS tour_id, " +
                 "tour.name AS tour_name, " +
                 "tour.description AS tour_description, " +
                 "tour.durationHours AS tour_durationHours, " +
@@ -30,22 +30,15 @@ public class TourDao implements Dao<Tour> {
                 "tour.location AS tour_location, " +
                 "tour.maxCapacity AS tour_maxCapacity, " +
                 "tour.date AS tour_date, " +
-                "organization.id AS org_id, " +
-                "organization.name AS org_name, " +
-                "organization.description AS org_description, " +
-                "organization.address AS org_address, " +
-                "organization.website AS org_website, " +
-                "organization.phone AS org_phone, " +
-                "organization.email AS org_email, " +
+                "tour.orgId AS org_id, " +
                 "count(userHasTour.userId) as attendingUsers " +
                 "FROM tour " +
-                "INNER JOIN organization ON tour.orgId = organization.id " +
-                "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
-                "WHERE organization.id = ? " +
+                "LEFT JOIN userHasTour on userHasTour.tourId = tour.id " +
+                "WHERE orgId = ? " +
                 "GROUP BY tour.id";
         return jdbcTemplate.query(query, (rs, rowNum) -> {
             Tour tour = new Tour();
-            tour.setId(rs.getInt("id"));
+            tour.setId(rs.getInt("tour_id"));
             tour.setName(rs.getString("tour_name"));
             tour.setDescription(rs.getString("tour_description"));
             tour.setDurationHours(rs.getInt("tour_durationHours"));
@@ -58,12 +51,6 @@ public class TourDao implements Dao<Tour> {
 
             Organization organization = new Organization();
             organization.setId(rs.getInt("org_id"));
-            organization.setName(rs.getString("org_name"));
-            organization.setDescription(rs.getString("org_description"));
-            organization.setAddress(rs.getString("org_address"));
-            organization.setWebsite(rs.getString("org_website"));
-            organization.setPhone(rs.getString("org_phone"));
-            organization.setEmail(rs.getString("org_email"));
 
             tour.setOrganization(organization);
             return tour;
