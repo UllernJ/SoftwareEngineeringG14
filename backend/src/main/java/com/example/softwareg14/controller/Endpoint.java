@@ -1,4 +1,4 @@
-package com.example.softwareg14.map;
+package com.example.softwareg14.controller;
 
 public class Endpoint {
     private static final String apiPath = "/api/";

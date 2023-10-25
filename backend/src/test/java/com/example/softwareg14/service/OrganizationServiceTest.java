@@ -1,7 +1,7 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.config.AppConfigTest;
-import com.example.softwareg14.entity.Organization;
+import com.example.softwareg14.model.Organization;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,13 +50,8 @@ class OrganizationServiceTest {
         assertEquals(organization.getWebsite(), organizationFromDb.getWebsite());
         assertEquals(organization.getDescription(), organizationFromDb.getDescription());
     }
-
     @Test
-    void validateOrganization() throws NoSuchAlgorithmException {
-        assertTrue(organizationService.validateOrganization(organization.getEmail(), organization.getPassword()));
-    }
-    @Test
-    void updateOrganization() {
+    void updateOrganizationShouldUpdateTheCorrectValuesAndMatch() {
         organizationFromDb.setName("test8");
         organizationService.updateOrganization(organizationFromDb);
         organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail());
@@ -64,20 +59,20 @@ class OrganizationServiceTest {
     }
 
     @Test
-    void getAllOrganizations() {
+    void getAllOrganizationsShouldBeAListLargerThanZero() {
         List<Organization> organizations = organizationService.getAllOrganizations();
         assertTrue(organizations.size() > 0);
         assertTrue(organizations.contains(organizationFromDb));
     }
 
     @Test
-    void getOrganizationById() {
+    void registeredOrganizationShouldBeFetchedFromDB() {
         Organization organizationById = organizationService.getOrganizationById(organizationFromDb.getId());
         assertEquals(organizationFromDb, organizationById);
     }
 
     @Test
-    void organizationExists() {
+    void registeredOrganizationShouldExist() {
         assertTrue(organizationService.organizationExists(organizationFromDb.getEmail()));
     }
 
@@ -99,6 +94,11 @@ class OrganizationServiceTest {
         assertThrows(RuntimeException.class, () -> {
             organizationService.getOrganizationById(4121241);
         });
+    }
+
+    @Test
+    void validateOrganizationShouldReturnTrueIfExists() throws NoSuchAlgorithmException {
+        assertTrue(organizationService.validateOrganization(organization.getEmail(), organization.getPassword()));
     }
 
     @Test

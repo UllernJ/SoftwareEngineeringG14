@@ -1,4 +1,4 @@
-package com.example.softwareg14.entity;
+package com.example.softwareg14.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder

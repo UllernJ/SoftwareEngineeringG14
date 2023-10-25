@@ -1,13 +1,11 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.dao.TourDao;
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.Tour;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.model.Tour;
+import com.example.softwareg14.controller.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

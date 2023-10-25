@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HashServiceTest {
 
     @Test
-    public void testHashPassword() throws NoSuchAlgorithmException {
+    public void hashedPasswordShouldEqualToPreHashed() throws NoSuchAlgorithmException {
         String password = "batman14";
         String hashedPassword = "cbbc30ec174736b13ef4853e7fd4764f";
         assertEquals(hashedPassword, HashService.hashPassword(password));

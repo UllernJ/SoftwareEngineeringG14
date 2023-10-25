@@ -1,9 +1,8 @@
-package com.example.softwareg14.map.user;
+package com.example.softwareg14.controller.user;
 
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.User;
-import com.example.softwareg14.map.Endpoint;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.model.User;
+import com.example.softwareg14.controller.Endpoint;
+import com.example.softwareg14.controller.Error;
 import com.example.softwareg14.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserMap {
+public class UserController {
 
     private final UserService userService;
 
     @Autowired
-    public UserMap(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

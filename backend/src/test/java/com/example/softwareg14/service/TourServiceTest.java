@@ -1,9 +1,9 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.config.AppConfigTest;
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.Tour;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.model.Organization;
+import com.example.softwareg14.model.Tour;
+import com.example.softwareg14.controller.Error;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -145,13 +145,20 @@ class TourServiceTest {
 
     @Test
     @Order(10)
+    void ShouldReturnNoToursByOrganizationId() {
+        List<Tour> tours = tourService.getToursbyOrganizationId(696969);
+        assertTrue(tours.size() == 0);
+    }
+
+    @Test
+    @Order(11)
     void ShouldReturnAllToursByUserId() {
         List<Tour> tours = tourService.getToursByUserId(1);
         assertTrue(tours.size() > 0);
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void shouldReturnTourById() {
         Tour tour = tourService.getTourById(tourFromDb.getId());
         assertEquals(tourFromDb.getId(), tour.getId());

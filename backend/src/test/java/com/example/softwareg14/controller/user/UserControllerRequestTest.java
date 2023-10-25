@@ -1,13 +1,13 @@
-package com.example.softwareg14.map.user;
+package com.example.softwareg14.controller.user;
 
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.controller.Error;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserMapRequestTest {
+class UserControllerRequestTest {
     @Test
     public void validateShouldFailIfEmailIsNull() {
         UserRequest userRequest = new UserRequest();

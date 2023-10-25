@@ -1,23 +1,21 @@
-package com.example.softwareg14.map.tour;
+package com.example.softwareg14.controller.tour;
 
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.Tour;
-import com.example.softwareg14.map.Endpoint;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.model.Tour;
+import com.example.softwareg14.controller.Endpoint;
+import com.example.softwareg14.controller.Error;
 import com.example.softwareg14.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-public class TourMap {
+public class TourController {
     private final TourService tourService;
     @Autowired
-    public TourMap(TourService tourService) {
+    public TourController(TourService tourService) {
         this.tourService = tourService;
     }
 

@@ -1,12 +1,10 @@
 package com.example.softwareg14.dao;
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.Tour;
-import com.example.softwareg14.service.HashService;
+import com.example.softwareg14.model.Organization;
+import com.example.softwareg14.model.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 @Component
 public class TourDao implements Dao<Tour> {

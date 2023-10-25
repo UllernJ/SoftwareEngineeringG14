@@ -1,7 +1,7 @@
 package com.example.softwareg14.dao;
 
-import com.example.softwareg14.entity.Role;
-import com.example.softwareg14.entity.User;
+import com.example.softwareg14.model.Role;
+import com.example.softwareg14.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

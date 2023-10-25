@@ -1,8 +1,8 @@
-package com.example.softwareg14.map.user;
+package com.example.softwareg14.controller.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.controller.Error;
 
 public class UserRequest {
     public String email;

@@ -1,7 +1,7 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.dao.OrganizationDao;
-import com.example.softwareg14.entity.Organization;
+import com.example.softwareg14.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

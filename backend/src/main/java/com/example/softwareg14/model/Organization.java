@@ -1,4 +1,4 @@
-package com.example.softwareg14.entity;
+package com.example.softwareg14.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

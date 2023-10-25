@@ -1,4 +1,4 @@
-package com.example.softwareg14.entity;
+package com.example.softwareg14.model;
 
 public enum Role {
     USER,

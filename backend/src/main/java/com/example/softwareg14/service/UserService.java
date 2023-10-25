@@ -1,7 +1,7 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.dao.UserDao;
-import com.example.softwareg14.entity.User;
+import com.example.softwareg14.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

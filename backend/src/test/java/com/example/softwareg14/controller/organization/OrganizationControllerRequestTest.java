@@ -1,13 +1,13 @@
-package com.example.softwareg14.map.organization;
+package com.example.softwareg14.controller.organization;
 
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.controller.Error;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrganizationMapRequestTest {
+class OrganizationControllerRequestTest {
 
     @Test
     public void allFieldsFilledShouldSuccess() {

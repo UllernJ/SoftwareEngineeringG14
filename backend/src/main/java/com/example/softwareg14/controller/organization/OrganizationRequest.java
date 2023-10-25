@@ -1,6 +1,6 @@
-package com.example.softwareg14.map.organization;
+package com.example.softwareg14.controller.organization;
 
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.controller.Error;
 
 import java.util.ArrayList;
 import java.util.List;

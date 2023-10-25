@@ -1,7 +1,7 @@
 package com.example.softwareg14.service;
 
 import com.example.softwareg14.config.AppConfigTest;
-import com.example.softwareg14.entity.User;
+import com.example.softwareg14.model.User;
 import org.junit.jupiter.api.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -38,26 +38,26 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUserShouldExist() {
+    public void testUserCreatedShouldExistInDb() {
         String username = user.getUsername();
         assertTrue(userService.userExist(username));
     }
 
     @Test
-    public void testUserShouldNotExist() {
+    public void testUserShouldNotExistInDb() {
         String username = "test1234ik12j4io1jdisadasioasdadasdasdasva";
         assertFalse(userService.userExist(username));
     }
 
     @Test
-    public void testUserShouldBeValid() throws NoSuchAlgorithmException {
+    public void testValidateUserShouldBeTrueIfExistsInDB() throws NoSuchAlgorithmException {
         String username = user.getUsername();
         String password = "test4";
         assertTrue(userService.validateUser(username, password));
     }
 
     @Test
-    public void testUserShouldNotBeValid() throws NoSuchAlgorithmException {
+    public void testValidateUserShouldBeFalseIfNotExistsInDB() throws NoSuchAlgorithmException {
         String username = user.getUsername();
         String password = "askodosakdopasdoaskdosadasldpaxplapxlpaslxpaslxa";
         assertFalse(userService.validateUser(username, password));
@@ -71,7 +71,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUserShouldNotWorkIfDoesntExist() {
+    public void testUpdateUserShouldNotWorkIfDoesntExist() {
         User user = User.builder()
                 .username("test1234ik12j4io1jdisadasioasdadasdasdasva")
                 .name("test2")
@@ -96,7 +96,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testIfUserIdIsNullItWillBeFetched() throws NoSuchAlgorithmException {
+    public void testIfUserIdIsNullItWillBeFetchedWhenUpdating() throws NoSuchAlgorithmException {
         user.setId(null);
         userService.updateUser(user);
         assertNotNull(user.getId());

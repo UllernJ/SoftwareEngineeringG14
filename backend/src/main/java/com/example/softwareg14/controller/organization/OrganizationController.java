@@ -1,10 +1,8 @@
-package com.example.softwareg14.map.organization;
+package com.example.softwareg14.controller.organization;
 
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.entity.User;
-import com.example.softwareg14.map.Endpoint;
-import com.example.softwareg14.map.Error;
-import com.example.softwareg14.map.user.UserRequest;
+import com.example.softwareg14.model.Organization;
+import com.example.softwareg14.controller.Endpoint;
+import com.example.softwareg14.controller.Error;
 import com.example.softwareg14.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class OrganizationMap {
+public class OrganizationController {
 
     private final OrganizationService organizationService;
 
     @Autowired
-    public OrganizationMap(OrganizationService organizationService) {
+    public OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
     }
 

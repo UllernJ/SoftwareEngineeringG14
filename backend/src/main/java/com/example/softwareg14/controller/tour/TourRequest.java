@@ -1,8 +1,8 @@
-package com.example.softwareg14.map.tour;
+package com.example.softwareg14.controller.tour;
 
 
-import com.example.softwareg14.entity.Organization;
-import com.example.softwareg14.map.Error;
+import com.example.softwareg14.model.Organization;
+import com.example.softwareg14.controller.Error;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
