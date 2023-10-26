@@ -1,20 +1,18 @@
 package com.example.softwareg14.service;
 
+import com.example.softwareg14.controller.Error;
 import com.example.softwareg14.dao.TourDao;
 import com.example.softwareg14.model.Tour;
-import com.example.softwareg14.controller.Error;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class TourService {
-    private final TourDao tourDao;
     @Autowired
-    public TourService(TourDao tourDao) {
-        this.tourDao = tourDao;
+    private TourDao tourDao;
+
+    public TourService() {
     }
 
     public void createTour(Tour tour) {
@@ -60,10 +58,10 @@ public class TourService {
     public List<Error> isPersonEligibleForTour(int userId, int tourId) {
         List<Error> errors = new ArrayList<>();
         Tour tour = tourDao.getById(tourId);
-        if(tour.getAttendingUsers() >= tour.getMaxCapacity()) {
+        if (tour.getAttendingUsers() >= tour.getMaxCapacity()) {
             errors.add(Error.TOUR_IS_FULL);
         }
-        if(tourDao.isUserInTour(userId, tourId)) {
+        if (tourDao.isUserInTour(userId, tourId)) {
             errors.add(Error.USER_ALREADY_IN_TOUR);
         }
         return errors;

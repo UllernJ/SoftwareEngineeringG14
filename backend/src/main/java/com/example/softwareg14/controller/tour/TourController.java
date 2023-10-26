@@ -1,8 +1,8 @@
 package com.example.softwareg14.controller.tour;
 
-import com.example.softwareg14.model.Tour;
 import com.example.softwareg14.controller.Endpoint;
 import com.example.softwareg14.controller.Error;
+import com.example.softwareg14.model.Tour;
 import com.example.softwareg14.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +14,13 @@ import java.util.List;
 @RestController
 public class TourController {
     private final TourService tourService;
+
     @Autowired
     public TourController(TourService tourService) {
         this.tourService = tourService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping(Endpoint.TOURS_ALL)
     public ResponseEntity<List<Tour>> getAllTours() {
         try {
@@ -30,7 +31,7 @@ public class TourController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping(Endpoint.TOURS_BY_USER_ID)
     public ResponseEntity<List<Tour>> getToursByUserId(@PathVariable("id") int id) {
         try {
@@ -40,7 +41,7 @@ public class TourController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping(Endpoint.TOURS_BY_ORGANIZATION_ID)
     public ResponseEntity<List<Tour>> getToursByOrganizationId(@PathVariable("id") int id) {
         try {
@@ -50,33 +51,33 @@ public class TourController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping(Endpoint.TOUR_BY_ID)
     public ResponseEntity<Tour> getTourById(@PathVariable("id") int id) {
         try {
-         Tour tour = tourService.getTourById(id);
+            Tour tour = tourService.getTourById(id);
             return new ResponseEntity<>(tour, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PutMapping(Endpoint.TOUR_UPDATE)
-    public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest, @PathVariable int id){
+    public ResponseEntity<String> updateTour(@RequestBody TourRequest tourRequest, @PathVariable int id) {
         try {
             Tour tour = Tour.builder()
-                            .id(id)
-                            .name(tourRequest.name)
-                            .description(tourRequest.description)
-                            .durationHours(tourRequest.durationHours)
-                            .price(tourRequest.price)
-                            .image(tourRequest.image)
-                            .maxCapacity(tourRequest.maxCapacity)
-                            .date(tourRequest.date)
-                            .location(tourRequest.location)
-                            .category(tourRequest.category)
-                                    .build();
+                    .id(id)
+                    .name(tourRequest.name)
+                    .description(tourRequest.description)
+                    .durationHours(tourRequest.durationHours)
+                    .price(tourRequest.price)
+                    .image(tourRequest.image)
+                    .maxCapacity(tourRequest.maxCapacity)
+                    .date(tourRequest.date)
+                    .location(tourRequest.location)
+                    .category(tourRequest.category)
+                    .build();
 
             tourService.updateTour(tour);
 
@@ -86,9 +87,9 @@ public class TourController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @DeleteMapping(Endpoint.DELETE_TOUR)
-    public ResponseEntity<String> deleteTour(@PathVariable("id") int id){
+    public ResponseEntity<String> deleteTour(@PathVariable("id") int id) {
         try {
             tourService.deleteTourById(id);
             return ResponseEntity.ok("Tour deleted successfully.");
@@ -97,11 +98,11 @@ public class TourController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(Endpoint.ADD_USER_TO_TOUR)
-    public ResponseEntity<String> addUserToTour(@RequestBody TourRequest tourRequest){
+    public ResponseEntity<String> addUserToTour(@RequestBody TourRequest tourRequest) {
         try {
-             int userId = tourRequest.userId;
+            int userId = tourRequest.userId;
             int tourId = tourRequest.tourId;
             List<Error> errors = tourService.isPersonEligibleForTour(userId, tourId);
             if (!errors.isEmpty()) {
@@ -115,7 +116,7 @@ public class TourController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(Endpoint.CREATE_TOUR)
     public ResponseEntity<String> createTour(@RequestBody TourRequest tourRequest) {
         try {
@@ -131,16 +132,16 @@ public class TourController {
                     .maxCapacity(tourRequest.maxCapacity)
                     .date(tourRequest.date)
                     .build();
-                    tourService.createTour(tour);
+            tourService.createTour(tour);
             return ResponseEntity.ok("Tour created successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(Endpoint.REMOVE_USER_FROM_TOUR)
-    public ResponseEntity<String> removeUserFromTour(@RequestBody TourRequest tourRequest){
+    public ResponseEntity<String> removeUserFromTour(@RequestBody TourRequest tourRequest) {
         try {
             if (tourService.isUserInTour(tourRequest.userId, tourRequest.tourId)) {
                 tourService.removeUserFromTour(tourRequest.userId, tourRequest.tourId);

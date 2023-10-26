@@ -1,8 +1,8 @@
 package com.example.softwareg14.controller.organization;
 
-import com.example.softwareg14.model.Organization;
 import com.example.softwareg14.controller.Endpoint;
 import com.example.softwareg14.controller.Error;
+import com.example.softwareg14.model.Organization;
 import com.example.softwareg14.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +21,12 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(Endpoint.ORGANIZATION_REGISTER)
     public ResponseEntity<String> organization(@RequestBody OrganizationRequest organizationRequest) {
         List<Error> errors = organizationRequest.validate();
-        if(!errors.isEmpty()) {
-            return new ResponseEntity(errors.toString(), HttpStatus.BAD_REQUEST);
+        if (!errors.isEmpty()) {
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
         }
         try {
             Organization organization = Organization.builder()
@@ -39,17 +39,16 @@ public class OrganizationController {
                     .description(organizationRequest.description)
                     .build();
             organizationService.createOrganization(organization);
-            return new ResponseEntity("Organization registered successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Organization registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity("Failed to register organization", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to register organization", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(Endpoint.ORGANIZATION_LOGIN)
     public ResponseEntity<Organization> login(@RequestBody OrganizationRequest organizationRequest) {
         try {
-            if(organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
+            if (organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
                 Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
                 return new ResponseEntity<>(organization, HttpStatus.OK);
             } else {
@@ -60,11 +59,10 @@ public class OrganizationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(Endpoint.ORGANIZATION_DELETE)
     public ResponseEntity<Organization> delete(@RequestBody OrganizationRequest organizationRequest, @PathVariable("id") int id) {
         try {
-            if(organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
+            if (organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
                 Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
                 organizationService.deleteOrganizationById(organization.getId());
                 return new ResponseEntity<>(organization, HttpStatus.OK);
@@ -76,7 +74,6 @@ public class OrganizationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(Endpoint.ORGANIZATIONS_ALL)
     public ResponseEntity<List<Organization>> getAllOrganizations() {
         try {
@@ -87,7 +84,6 @@ public class OrganizationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(Endpoint.ORGANIZATION_UPDATE)
     public ResponseEntity<String> updateOrganization(@RequestBody Organization organization, @PathVariable("id") int id) {
         try {
@@ -98,7 +94,6 @@ public class OrganizationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(Endpoint.ORGANIZATION_BY_ID)
     public ResponseEntity<Organization> getOrganizationById(@PathVariable("id") int id) {
         try {

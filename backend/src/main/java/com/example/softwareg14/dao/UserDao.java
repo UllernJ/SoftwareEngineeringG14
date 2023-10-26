@@ -4,20 +4,17 @@ import com.example.softwareg14.model.Role;
 import com.example.softwareg14.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+
 public class UserDao implements Dao<User> {
 
     private List<User> users;
-    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
+
 
     @Override
     public User getById(int id) {

@@ -3,17 +3,14 @@ package com.example.softwareg14.service;
 import com.example.softwareg14.dao.OrganizationDao;
 import com.example.softwareg14.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-@Service
 public class OrganizationService {
-    private final OrganizationDao organizationDao;
+
     @Autowired
-    public OrganizationService(OrganizationDao organizationDao) { this.organizationDao = organizationDao; }
+    private OrganizationDao organizationDao;
 
     public void createOrganization(Organization organization) throws NoSuchAlgorithmException {
         if (organizationExists(organization.getEmail())) {
@@ -24,13 +21,13 @@ public class OrganizationService {
     }
 
     public void deleteOrganizationById(int id) {
-        if(getOrganizationById(id) != null) {
+        if (getOrganizationById(id) != null) {
             organizationDao.delete(id);
         }
     }
 
     public void updateOrganization(Organization organization) {
-        if(getOrganizationById(organization.getId()) != null) {
+        if (getOrganizationById(organization.getId()) != null) {
             organizationDao.update(organization);
         }
     }
@@ -49,7 +46,7 @@ public class OrganizationService {
 
     public Organization getOrganizationById(int id) {
         Organization org = organizationDao.getById(id);
-        if(org == null) {
+        if (org == null) {
             throw new IllegalArgumentException("Organization does not exist");
         }
         return org;

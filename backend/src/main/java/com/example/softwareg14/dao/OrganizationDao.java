@@ -4,21 +4,17 @@ import com.example.softwareg14.model.Organization;
 import com.example.softwareg14.service.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class OrganizationDao implements Dao<Organization> {
 
-    private final List<Organization> organizations = new ArrayList<>();
-    private final JdbcTemplate jdbcTemplate;
     @Autowired
-    public OrganizationDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
+
+    private final List<Organization> organizations = new ArrayList<>();
 
     @Override
     public Organization getById(int id) {

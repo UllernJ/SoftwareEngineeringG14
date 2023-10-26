@@ -1,18 +1,26 @@
 package com.example.softwareg14.service;
 
-import com.example.softwareg14.config.AppConfigTest;
+import com.example.softwareg14.config.AppConfig;
+import com.example.softwareg14.config.DaoModule;
+import com.example.softwareg14.config.ServiceModule;
 import com.example.softwareg14.model.User;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-
 
 import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest(classes = { ServiceModule.class, DaoModule.class, AppConfig.class })
 public class UserServiceTest {
 
-    private final UserService userService = new AppConfigTest().userService();
+    @Autowired
+    private UserService userService;
     private User user;
     private User userFromDb;
 

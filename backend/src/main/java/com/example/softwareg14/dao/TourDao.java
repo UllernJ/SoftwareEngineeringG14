@@ -1,20 +1,18 @@
 package com.example.softwareg14.dao;
+
 import com.example.softwareg14.model.Organization;
 import com.example.softwareg14.model.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Component
+
 public class TourDao implements Dao<Tour> {
 
     private List<Tour> tours;
-    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    public TourDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
 
 
     public List<Tour> getToursByOrganizationId(int id) {
@@ -77,7 +75,7 @@ public class TourDao implements Dao<Tour> {
                 "count(userHasTour.userId) as attendingUsers " +
                 "FROM tour " +
                 "INNER JOIN organization ON tour.orgId = organization.id " +
-                "INNER JOIN userHasTour on userHasTour.tourId = tour.id " +
+                "LEFT JOIN userHasTour on userHasTour.tourId = tour.id " +
                 "WHERE tour.id = ? " +
                 "GROUP BY tour.id";
         return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {

@@ -1,11 +1,16 @@
 package com.example.softwareg14.service;
 
-import com.example.softwareg14.config.AppConfigTest;
+import com.example.softwareg14.config.AppConfig;
+import com.example.softwareg14.config.DaoModule;
+import com.example.softwareg14.config.ServiceModule;
 import com.example.softwareg14.model.Organization;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -13,8 +18,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest(classes = {ServiceModule.class, DaoModule.class, AppConfig.class})
+@TestConfiguration
 class OrganizationServiceTest {
-    private final OrganizationService organizationService = new AppConfigTest().organizationService();
+    @Autowired
+    private OrganizationService organizationService;
     private Organization organization;
     private Organization organizationFromDb;
 

@@ -3,18 +3,14 @@ package com.example.softwareg14.service;
 import com.example.softwareg14.dao.UserDao;
 import com.example.softwareg14.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 
-
-@Service
 public class UserService {
-    private final UserDao userDao;
-
     @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
+    private UserDao userDao;
+
+    public UserService() {
     }
 
     public void createUser(User user) throws NoSuchAlgorithmException {
@@ -39,26 +35,22 @@ public class UserService {
     }
 
     public void deleteUserById(int id) {
-        if(getUserById(id) == null) {
+        if (getUserById(id) == null) {
             throw new IllegalArgumentException("User does not exist");
         }
         userDao.delete(id);
     }
 
     public void updateUser(User user) throws NoSuchAlgorithmException {
-        if(!userExist(user.getUsername())) {
+        if (!userExist(user.getUsername())) {
             throw new IllegalArgumentException("User does not exist");
         }
-        if(user.getId() == null) {
+        if (user.getId() == null) {
             int id = userDao.getUserByUsername(user.getUsername()).getId();
             user.setId(id);
         }
         user.setPassword(HashService.hashPassword(user.getPassword()));
         userDao.update(user);
-    }
-
-    public void deleteUser(int id) {
-        userDao.delete(id);
     }
 
     public boolean userExist(String username) {
