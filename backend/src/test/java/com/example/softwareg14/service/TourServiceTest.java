@@ -1,6 +1,6 @@
 package com.example.softwareg14.service;
 
-import com.example.softwareg14.config.AppConfig;
+import com.example.softwareg14.config.DatabaseConfig;
 import com.example.softwareg14.config.DaoModule;
 import com.example.softwareg14.config.ServiceModule;
 import com.example.softwareg14.controller.Error;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(classes = {ServiceModule.class, DaoModule.class, AppConfig.class})
+@SpringBootTest(classes = {ServiceModule.class, DaoModule.class, DatabaseConfig.class})
 class TourServiceTest {
     @Autowired
     private TourService tourService;

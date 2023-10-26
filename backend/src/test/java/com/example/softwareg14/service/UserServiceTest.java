@@ -1,6 +1,6 @@
 package com.example.softwareg14.service;
 
-import com.example.softwareg14.config.AppConfig;
+import com.example.softwareg14.config.DatabaseConfig;
 import com.example.softwareg14.config.DaoModule;
 import com.example.softwareg14.config.ServiceModule;
 import com.example.softwareg14.model.User;
@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(classes = { ServiceModule.class, DaoModule.class, AppConfig.class })
+@SpringBootTest(classes = { ServiceModule.class, DaoModule.class, DatabaseConfig.class })
 public class UserServiceTest {
 
     @Autowired
