@@ -135,7 +135,7 @@ export const Login = () => {
                     <div className="col-md-12">
                         <h3>Quick login</h3>
                         <p>For testing purposes</p>
-                        <button onClick={() => quickLogin} className="btn btn-primary m-2">Login as user</button>
+                        <button onClick={() => quickLogin()} className="btn btn-primary m-2">Login as user</button>
                         <button onClick={() => quickLogin(true)} className="btn btn-success m-2">Login as organization</button>
                         <button onClick={quickLoginAdmin} className="btn btn-danger m-2">Login as admin</button>
                     </div>
