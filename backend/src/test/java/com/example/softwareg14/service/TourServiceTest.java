@@ -60,19 +60,54 @@ class TourServiceTest {
 
     @Test
     @Order(1)
-    void createTourShouldBeEqualToTourFromDb() {
+    void testNameShouldBeEqualToTourFromDb() {
         assertEquals(tour.getName(), tourFromDb.getName());
-        assertEquals(tour.getDescription(), tourFromDb.getDescription());
-        assertEquals(tour.getDurationHours(), tourFromDb.getDurationHours());
-        assertEquals(tour.getPrice(), tourFromDb.getPrice());
-        assertEquals(tour.getImage(), tourFromDb.getImage());
-        assertEquals(tour.getLocation(), tourFromDb.getLocation());
-        assertEquals(tour.getMaxCapacity(), tourFromDb.getMaxCapacity());
-        assertEquals(tour.getOrganization().getId(), tourFromDb.getOrganization().getId());
     }
 
     @Test
     @Order(2)
+    void testDescriptionShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getDescription(), tourFromDb.getDescription());
+    }
+
+    @Test
+    @Order(3)
+    void testDurationHoursShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getDurationHours(), tourFromDb.getDurationHours());
+    }
+
+    @Test
+    @Order(4)
+    void testPriceShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getPrice(), tourFromDb.getPrice());
+    }
+
+    @Test
+    @Order(5)
+    void testImageShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getImage(), tourFromDb.getImage());
+    }
+
+    @Test
+    @Order(6)
+    void testLocationShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getLocation(), tourFromDb.getLocation());
+    }
+
+    @Test
+    @Order(7)
+    void testMaxCapacityShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getMaxCapacity(), tourFromDb.getMaxCapacity());
+    }
+
+    @Test
+    @Order(8)
+    void testOrganizationIdShouldBeEqualToTourFromDb() {
+        assertEquals(tour.getOrganization().getId(), tourFromDb.getOrganization().getId());
+    }
+
+    @Test
+    @Order(9)
     void editTourShouldBeEqualToTourFromDb() {
         tourFromDb.setName("test5");
         tourFromDb.setDescription("test6");
@@ -95,21 +130,21 @@ class TourServiceTest {
     }
 
     @Test
-    @Order(3)
+    @Order(10)
     void addAttendeeShouldBeTrue() {
         tourService.addUserToTour(orgId, tourFromDb.getId());
         assertTrue(tourService.isUserInTour(orgId, tourFromDb.getId()));
     }
 
     @Test
-    @Order(4)
+    @Order(11)
     void removeAttendeeShouldBeFalse() {
         tourService.removeUserFromTour(orgId, tourFromDb.getId());
         assertFalse(tourService.isUserInTour(orgId, tourFromDb.getId()));
     }
 
     @Test
-    @Order(5)
+    @Order(12)
     void tourShouldHave3Attendees() {
         tourService.addUserToTour(1, tourFromDb.getId());
         tourService.addUserToTour(2, tourFromDb.getId());
@@ -119,7 +154,7 @@ class TourServiceTest {
     }
 
     @Test
-    @Order(6)
+    @Order(13)
     void addingSameAttendeeResultInError() {
         List<Error> errors = tourService.isPersonEligibleForTour(1, tourFromDb.getId());
         assertEquals(1, errors.size());
@@ -127,7 +162,7 @@ class TourServiceTest {
     }
 
     @Test
-    @Order(7)
+    @Order(14)
     void addingAttendeesToFullTourShouldResultInError() {
         tourService.addUserToTour(4, tourFromDb.getId());
         tourService.addUserToTour(5, tourFromDb.getId());
@@ -137,35 +172,35 @@ class TourServiceTest {
     }
 
     @Test
-    @Order(8)
+    @Order(15)
     void getAllShouldReturnAllTours() {
         List<Tour> tours = tourService.getAllTours();
         assertTrue(tours.size() > 0);
     }
 
     @Test
-    @Order(9)
+    @Order(16)
     void ShouldReturnAllToursByOrganizationId() {
         List<Tour> tours = tourService.getToursbyOrganizationId(orgId);
         assertTrue(tours.size() > 0);
     }
 
     @Test
-    @Order(10)
+    @Order(17)
     void ShouldReturnNoToursByOrganizationId() {
         List<Tour> tours = tourService.getToursbyOrganizationId(696969);
         assertTrue(tours.size() == 0);
     }
 
     @Test
-    @Order(11)
+    @Order(18)
     void ShouldReturnAllToursByUserId() {
         List<Tour> tours = tourService.getToursByUserId(1);
         assertTrue(tours.size() > 0);
     }
 
     @Test
-    @Order(12)
+    @Order(19)
     void shouldReturnTourById() {
         Tour tour = tourService.getTourById(tourFromDb.getId());
         assertEquals(tourFromDb.getId(), tour.getId());
