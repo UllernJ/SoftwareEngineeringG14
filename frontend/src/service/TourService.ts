@@ -1,6 +1,7 @@
 import {Tour} from "../types/global";
 import {getUser} from "./UserService";
 import {TourEditRequest} from "../pages/TourEditPage";
+import {CreateTourRequest} from "../pages/CreateTourPage";
 
 export const TourService = {
     getTours: async (): Promise<Tour[]> => {
@@ -61,7 +62,7 @@ export const TourService = {
     },
 
     removeTour: async (tourId: number): Promise<Response> => {
-        if(getUser().role !== "ADMIN") return new Response(
+        if (getUser().role !== "ADMIN") return new Response(
             JSON.stringify({message: "You are not authorized to delete this tour"}),
             {
                 status: 401
@@ -101,5 +102,19 @@ export const TourService = {
         }
         return fetch(url, options)
             .then(response => response);
+    },
+
+    createTour: async (tour: CreateTourRequest): Promise<Response> => {
+        const url: string = "http://localhost:8080/api/tour";
+        const options: RequestInit = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tour)
+        }
+        return fetch(url, options)
+            .then(response => response);
     }
+
 }

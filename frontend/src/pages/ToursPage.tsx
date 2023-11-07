@@ -102,7 +102,7 @@ export const ToursPage = () => {
                                         )}
                                         </>
                                     )}
-                                    {isOrganizationLoggedIn() && getOrganizationId() === tour.organization.id && (
+                                    {isOrganizationLoggedIn() && getOrganizationId() === tour.organization.id || user.role === "ADMIN" && (
                                         <Link to={"/tour/" + tour.id + "/edit"} className="btn btn-primary">Edit</Link>
                                     )}
 

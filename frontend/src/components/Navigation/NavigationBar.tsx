@@ -19,6 +19,11 @@ export const NavigationBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/tours">Tours</Link>
                         </li>
+                        {isOrganizationLoggedIn() && !isUserLoggedIn() ? (
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/create/tour">Create tour</Link>
+                            </li>
+                        ) : null}
                         {!isUserLoggedIn() && !isOrganizationLoggedIn() ? (
                             <>
                                 <li className="nav-item">
