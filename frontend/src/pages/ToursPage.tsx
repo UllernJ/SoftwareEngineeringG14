@@ -1,18 +1,19 @@
-import { TourService } from "../service/TourService";
-import { Tour } from "../types/global";
-import { useEffect, useState } from "react";
-import { getUser, isUserLoggedIn } from "../service/UserService";
-import { Link } from "react-router-dom";
-import {getOrganizationId, isOrganizationLoggedIn} from "../service/OrganizationService";
+import {TourService} from "../service/TourService";
+import {Tour} from "../types/global";
+import {useEffect, useState} from "react";
+import {getUser, isUserLoggedIn} from "../service/UserService";
+import {Link} from "react-router-dom";
+import {getOrgToken, isOrganizationLoggedIn} from "../service/OrganizationService";
 
 export const ToursPage = () => {
     const [toursArr, setToursArr] = useState<Tour[]>([]);
     const [attendingTours, setAttendingTours] = useState<Tour[]>([]);
     const [hoveredTourId, setHoveredTourId] = useState<number | null>(null);
     const user = getUser();
+    const org = getOrgToken();
 
     useEffect(() => {
-        if(!isUserLoggedIn() && !isOrganizationLoggedIn()) {
+        if (!isUserLoggedIn() && !isOrganizationLoggedIn()) {
             window.location.href = "/";
         }
         if (toursArr.length > 0) {
@@ -50,7 +51,7 @@ export const ToursPage = () => {
     }
 
     const removeTour = (tourId: number) => {
-        if(user.role === "ADMIN") {
+        if (user.role === "ADMIN") {
             TourService.removeTour(tourId).then(res => {
                 if (res.status === 200) {
                     setToursArr(toursArr.filter(tour => tour.id !== tourId));
@@ -66,8 +67,8 @@ export const ToursPage = () => {
                     {toursArr.map((tour: Tour) => (
                         <div className="col-md-4 mb-4" key={tour.id}>
                             <div className="card">
-                                <div style={{ height: '250px', overflow: 'hidden' }}>
-                                    <img src={tour.image} className="card-img-top" alt={tour.name} />
+                                <div style={{height: '250px', overflow: 'hidden'}}>
+                                    <img src={tour.image} className="card-img-top" alt={tour.name}/>
                                 </div>
                                 <div className="card-body">
                                     <Link to={"/tour/" + tour.id}><h5 className="card-title">{tour.name}</h5></Link>
@@ -83,31 +84,32 @@ export const ToursPage = () => {
                                 <div className="card-footer d-flex justify-content-between">
                                     {!isOrganizationLoggedIn() && (
                                         <>
-                                        {isUserLoggedIn() && isAttending(tour.id) ? (
-                                            <button
-                                                className={`btn btn-primary ${hoveredTourId === tour.id ? 'custom-hover' : ''}`}
-                                                onClick={() => removeAttendee(tour.id)}
-                                                onMouseEnter={() => setHoveredTourId(tour.id)} // Set the currently hovered tour
-                                                onMouseLeave={() => setHoveredTourId(null)} // Reset when mouse leaves
-                                            >
-                                                {hoveredTourId === tour.id ? 'Remove' : 'Attending'}
-                                            </button>
-                                        ) : (
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => addAttendee(tour.id)}
-                                            >
-                                                Attend
-                                            </button>
-                                        )}
+                                            {isUserLoggedIn() && isAttending(tour.id) ? (
+                                                <button
+                                                    className={`btn btn-primary ${hoveredTourId === tour.id ? 'custom-hover' : ''}`}
+                                                    onClick={() => removeAttendee(tour.id)}
+                                                    onMouseEnter={() => setHoveredTourId(tour.id)} // Set the currently hovered tour
+                                                    onMouseLeave={() => setHoveredTourId(null)} // Reset when mouse leaves
+                                                >
+                                                    {hoveredTourId === tour.id ? 'Remove' : 'Attending'}
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="btn btn-primary"
+                                                    onClick={() => addAttendee(tour.id)}
+                                                >
+                                                    Attend
+                                                </button>
+                                            )}
                                         </>
                                     )}
-                                    {isOrganizationLoggedIn() && getOrganizationId() === tour.organization.id || user.role === "ADMIN" && (
+                                    {(org.id === tour.organization.id || user.role === "ADMIN") && (
                                         <Link to={"/tour/" + tour.id + "/edit"} className="btn btn-primary">Edit</Link>
                                     )}
 
-                                    <Link to={"/organization/" + tour.organization.id} className="btn btn-primary">Organization</Link>
-                                    {user.role === "ADMIN" && (
+                                    <Link to={"/organization/" + tour.organization.id}
+                                          className="btn btn-primary">Organization</Link>
+                                    {(org.id === tour.organization.id || user.role === "ADMIN") && (
                                         <button
                                             className="btn btn-danger"
                                             onClick={() => removeTour(tour.id)}

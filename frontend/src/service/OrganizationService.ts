@@ -11,6 +11,10 @@ export const isOrganizationLoggedIn = (): boolean => {
     return !!sessionStorage.getItem('organization');
 }
 
+export const getOrgToken = (): Organization => {
+    return JSON.parse(sessionStorage.getItem('organization') || '{}');
+}
+
 export const getOrganizationId = (): number => {
     return JSON.parse(sessionStorage.getItem('organization')!).id;
 }
