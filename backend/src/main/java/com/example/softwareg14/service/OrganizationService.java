@@ -36,8 +36,12 @@ public class OrganizationService {
         return organizationDao.validateOrganization(email, password);
     }
 
-    public Organization getOrganizationByEmail(String email) {
-        return organizationDao.getOrganizationByEmail(email);
+    public Organization getOrganizationByEmail(String email, String password) throws NoSuchAlgorithmException {
+        if (validateOrganization(email, password)) {
+            return organizationDao.getOrganizationByEmail(email);
+        } else {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
     }
 
     public List<Organization> getAllOrganizations() {

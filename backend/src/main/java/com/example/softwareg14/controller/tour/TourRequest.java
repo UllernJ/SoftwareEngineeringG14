@@ -26,22 +26,22 @@ public class TourRequest {
 
     public List<Error> validate() {
         List<Error> errors = new ArrayList<>();
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             errors.add(Error.MISSING_NAME);
         }
-       if(description == null || description.isEmpty()) {
+        if (description == null || description.isEmpty()) {
             errors.add(Error.MISSING_DESCRIPTION);
         }
-       if(image == null || image.isEmpty()) {
+        if (image == null || image.isEmpty()) {
             errors.add(Error.MISSING_IMAGE);
         }
-       if(location == null || location.isEmpty()) {
+        if (location == null || location.isEmpty()) {
             errors.add(Error.MISSING_LOCATION);
         }
-       if(category == null || category.isEmpty()) {
+        if (category == null || category.isEmpty()) {
             errors.add(Error.MISSING_CATEGORY);
         }
-       if(organization == null) {
+        if (organization == null) {
             errors.add(Error.MISSING_ORGANIZATION);
         }
         return errors;

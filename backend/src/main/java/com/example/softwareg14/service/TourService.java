@@ -48,6 +48,9 @@ public class TourService {
     }
 
     public void removeUserFromTour(int userId, int tourId) {
+        if(!isUserInTour(userId, tourId)) {
+            throw new IllegalArgumentException("User is not in tour");
+        }
         tourDao.removeUserFromTour(userId, tourId);
     }
 

@@ -143,12 +143,8 @@ public class TourController {
     @PostMapping(Endpoint.REMOVE_USER_FROM_TOUR)
     public ResponseEntity<String> removeUserFromTour(@RequestBody TourRequest tourRequest) {
         try {
-            if (tourService.isUserInTour(tourRequest.userId, tourRequest.tourId)) {
-                tourService.removeUserFromTour(tourRequest.userId, tourRequest.tourId);
-                return ResponseEntity.ok("User removed from the tour successfully.");
-            } else {
-                return ResponseEntity.badRequest().body("User is not attending the tour.");
-            }
+            tourService.removeUserFromTour(tourRequest.userId, tourRequest.tourId);
+            return ResponseEntity.ok("User removed from the tour successfully.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

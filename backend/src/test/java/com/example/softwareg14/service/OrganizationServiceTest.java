@@ -37,7 +37,7 @@ class OrganizationServiceTest {
                 .build();
         organizationService.createOrganization(organization);
         organization.setPassword("test7");
-        organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail());
+        organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail(), organization.getPassword());
     }
 
     @Test
@@ -86,10 +86,10 @@ class OrganizationServiceTest {
 
     @Test
     @Order(8)
-    void updateOrganizationShouldUpdateTheCorrectValuesAndMatch() {
+    void updateOrganizationShouldUpdateTheCorrectValuesAndMatch() throws NoSuchAlgorithmException {
         organizationFromDb.setName("test8");
         organizationService.updateOrganization(organizationFromDb);
-        organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail());
+        organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail(), organization.getPassword());
         assertEquals("test8", organizationFromDb.getName());
     }
 

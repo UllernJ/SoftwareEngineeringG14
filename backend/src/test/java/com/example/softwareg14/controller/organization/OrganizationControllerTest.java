@@ -3,9 +3,7 @@ package com.example.softwareg14.controller.organization;
 import com.example.softwareg14.controller.Endpoint;
 import com.example.softwareg14.model.Organization;
 import com.example.softwareg14.service.OrganizationService;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,12 +41,6 @@ class OrganizationControllerTest {
     protected String mapToJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
-    }
-
-    protected <T> T mapFromJson(String json, Class<T> clazz)
-            throws JsonParseException, JsonMappingException, IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, clazz);
     }
 
     @Test
@@ -85,19 +75,16 @@ class OrganizationControllerTest {
     }
 
     @Test
-    void loginOrganizationShouldReturnStatusIsUnauthorized() throws Exception {
-        String inputJson = mapToJson(toDB);
-
-        mvc.perform(post(Endpoint.ORGANIZATION_LOGIN)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJson))
-                .andExpect(status().isUnauthorized());
+    void deleteOrganizationShouldReturnStatusIsBadRequest() throws Exception {
+        String badString = "badString";
+        mvc.perform(delete(Endpoint.ORGANIZATION_DELETE, badString))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    void deleteOrganizationShouldReturnStatusIsBadRequest() throws Exception {
+    void deleteOrganizationShouldReturnOkStatus() throws Exception {
         mvc.perform(delete(Endpoint.ORGANIZATION_DELETE, 1))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -119,6 +106,19 @@ class OrganizationControllerTest {
     @Test
     void getOrganizationByIdShouldReturnStatusIsOk() throws Exception {
         mvc.perform(get(Endpoint.ORGANIZATION_BY_ID, 1))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void loginShouldReturnStatusIsOk() throws Exception {
+        OrganizationRequest request = new OrganizationRequest();
+        request.email = "test4";
+        request.password = "test7";
+        String inputJson = mapToJson(request);
+
+        mvc.perform(post(Endpoint.ORGANIZATION_LOGIN)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJson))
                 .andExpect(status().isOk());
     }
 

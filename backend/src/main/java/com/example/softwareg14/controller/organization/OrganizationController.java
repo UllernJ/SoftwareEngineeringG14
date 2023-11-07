@@ -48,27 +48,19 @@ public class OrganizationController {
     @PostMapping(Endpoint.ORGANIZATION_LOGIN)
     public ResponseEntity<Organization> login(@RequestBody OrganizationRequest organizationRequest) {
         try {
-            if (organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
-                Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
-                return new ResponseEntity<>(organization, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-            }
+            Organization organization = organizationService
+                    .getOrganizationByEmail(organizationRequest.email, organizationRequest.password);
+            return new ResponseEntity<>(organization, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping(Endpoint.ORGANIZATION_DELETE)
-    public ResponseEntity<Organization> delete(@RequestBody OrganizationRequest organizationRequest, @PathVariable("id") int id) {
+    public ResponseEntity<Organization> delete(@PathVariable("id") int id) {
         try {
-            if (organizationService.validateOrganization(organizationRequest.email, organizationRequest.password)) {
-                Organization organization = organizationService.getOrganizationByEmail(organizationRequest.email);
-                organizationService.deleteOrganizationById(organization.getId());
-                return new ResponseEntity<>(organization, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-            }
+            organizationService.deleteOrganizationById(id);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

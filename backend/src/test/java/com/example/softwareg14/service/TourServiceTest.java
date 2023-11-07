@@ -51,7 +51,7 @@ class TourServiceTest {
                 .website("test")
                 .build();
         organizationService.createOrganization(organization);
-        organizationFromDb = organizationService.getOrganizationByEmail("test1234567890");
+        organizationFromDb = organizationService.getOrganizationByEmail(organization.getEmail(), "test");
         orgId = organizationFromDb.getId();
         tour.setOrganization(organizationFromDb);
         tourService.createTour(tour);
