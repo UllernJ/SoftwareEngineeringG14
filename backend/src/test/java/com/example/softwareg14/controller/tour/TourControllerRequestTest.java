@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TourControllerRequestTest {
 
     Organization organization = new Organization();
+
     @Test
     public void ValitadeShouldFailIfNameIsNull() {
         TourRequest tourRequest = new TourRequest();
