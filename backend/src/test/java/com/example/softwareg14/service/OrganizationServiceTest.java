@@ -4,10 +4,7 @@ import com.example.softwareg14.config.DatabaseConfig;
 import com.example.softwareg14.config.DaoModule;
 import com.example.softwareg14.config.ServiceModule;
 import com.example.softwareg14.model.Organization;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -19,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = {ServiceModule.class, DaoModule.class, DatabaseConfig.class})
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestConfiguration
 class OrganizationServiceTest {
     @Autowired
@@ -43,6 +41,7 @@ class OrganizationServiceTest {
     }
 
     @Test
+    @Order(1)
     public void testCreatingAOrganizationThatAlreadyExistShouldThrowException() throws NoSuchAlgorithmException {
         assertThrows(IllegalArgumentException.class, () -> {
             organizationService.createOrganization(organization);
@@ -50,15 +49,43 @@ class OrganizationServiceTest {
     }
 
     @Test
-    void createdOrganizationShouldBeEqualToOrganizationFromDb() {
+    @Order(2)
+    void createdOrganizationEmailShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getEmail(), organizationFromDb.getEmail());
+    }
+
+    @Test
+    @Order(3)
+    void createdOrganizationNameShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getName(), organizationFromDb.getName());
+    }
+
+    @Test
+    @Order(4)
+    void createdOrganizationAddressShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getAddress(), organizationFromDb.getAddress());
+    }
+
+    @Test
+    @Order(5)
+    void createdOrganizationPhoneShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getPhone(), organizationFromDb.getPhone());
+    }
+
+    @Test
+    @Order(6)
+    void createdOrganizationWebsiteShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getWebsite(), organizationFromDb.getWebsite());
+    }
+
+    @Test
+    @Order(7)
+    void createdOrganizationDescriptionShouldBeEqualToOrganizationFromDb() {
         assertEquals(organization.getDescription(), organizationFromDb.getDescription());
     }
+
     @Test
+    @Order(8)
     void updateOrganizationShouldUpdateTheCorrectValuesAndMatch() {
         organizationFromDb.setName("test8");
         organizationService.updateOrganization(organizationFromDb);
@@ -67,6 +94,7 @@ class OrganizationServiceTest {
     }
 
     @Test
+    @Order(9)
     void getAllOrganizationsShouldBeAListLargerThanZero() {
         List<Organization> organizations = organizationService.getAllOrganizations();
         assertTrue(organizations.size() > 0);
@@ -74,17 +102,20 @@ class OrganizationServiceTest {
     }
 
     @Test
+    @Order(10)
     void registeredOrganizationShouldBeFetchedFromDB() {
         Organization organizationById = organizationService.getOrganizationById(organizationFromDb.getId());
         assertEquals(organizationFromDb, organizationById);
     }
 
     @Test
+    @Order(11)
     void registeredOrganizationShouldExist() {
         assertTrue(organizationService.organizationExists(organizationFromDb.getEmail()));
     }
 
     @Test
+    @Order(12)
     public void testUpdateNonExistingOrganization() {
         Organization nonExistingOrganization = Organization.builder()
                 .id(696423439)
@@ -98,6 +129,7 @@ class OrganizationServiceTest {
     }
 
     @Test
+    @Order(13)
     public void testGetOrganizationByNonExistentId() {
         assertThrows(RuntimeException.class, () -> {
             organizationService.getOrganizationById(4121241);
@@ -105,22 +137,26 @@ class OrganizationServiceTest {
     }
 
     @Test
+    @Order(14)
     void validateOrganizationShouldReturnTrueIfExists() throws NoSuchAlgorithmException {
         assertTrue(organizationService.validateOrganization(organization.getEmail(), organization.getPassword()));
     }
 
     @Test
+    @Order(15)
     public void testValidateOrganizationWithWrongEmail() throws NoSuchAlgorithmException {
         assertFalse(organizationService.validateOrganization("wrongEmailAdress@test.com",
                 organization.getPassword()));
     }
 
     @Test
+    @Order(16)
     public void testValidateOrganizationWithWrongPassword() throws NoSuchAlgorithmException {
         assertFalse(organizationService.validateOrganization(organization.getEmail(), "wrongPassword"));
     }
 
     @Test
+    @Order(17)
     public void testDeleteOrganizationByNonExistentId() {
         assertThrows(RuntimeException.class, () -> {
             organizationService.deleteOrganizationById(124312412);  // An arbitrary non-existent ID
