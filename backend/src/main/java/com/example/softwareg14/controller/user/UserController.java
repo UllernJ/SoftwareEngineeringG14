@@ -68,7 +68,7 @@ public class UserController {
                     .email(userRequest.email)
                     .build();
             userService.updateUser(user);
-            return new ResponseEntity<>("User updated successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update user", HttpStatus.INTERNAL_SERVER_ERROR);
         }
