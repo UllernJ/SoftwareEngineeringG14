@@ -1,7 +1,17 @@
 # Software Engineering & Testing project
 
-This project uses Spring boot for backend and React with TypeScript to frontend.
+In this course we were tasked to create a system for guides that wants a platform for their services.
 
-## Downloading the necessary dependenciees
+## Backend
+Spring boot application built with maven.
 
-In the frontend file simply use `npm install` and for backend use maven to install.
+## Frontend
+The frontend is built with React/TypeScript.
+
+## Installing the dependenciees
+For backend - run maven install.\
+In the frontend use `npm install` in the terminal while in the /frontend folder.
+
+## Tests
+The backend consists of 123 tests that test the API, Controller, Service, Dao, etc.\
+Coverage is currently 90%~
